@@ -1,0 +1,1 @@
+export type CourseType = {id: number; code: string; level: string; title: string};
