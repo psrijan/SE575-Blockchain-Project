@@ -9,7 +9,7 @@
 - GET request
 2. Display All Crypto: (http://localhost:8080/crypto/all)
 - GET request 
-3. Add Crypto: (http://localhost:8080/crypto/all)
+3. Add Crypto: (http://localhost:8080/crypto/add)
 - POST request
 ```
 Same Request: 
@@ -23,5 +23,5 @@ Same Request:
 
 }
 ```
-4 Is Valid: (http//localhost:8080/crypto/valid)
+4 Is Valid: (http://localhost:8080/crypto/valid)
 - GET request
