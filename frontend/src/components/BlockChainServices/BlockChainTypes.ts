@@ -1,5 +1,5 @@
-export type CourseType = {id: number; code: string; level: string; title: string};
-export type BlockChain =
+// export type CourseType = {id: number; code: string; level: string; title: string};
+export type BlockElement =
     {
         query: string;
         block_hash: string;
@@ -7,5 +7,10 @@ export type BlockChain =
         execution_time_ms: number;
         found: boolean;
         parent_hash: string;
-        "block_id" : string
+        block_id : string
+    };
+
+export type BlockCreate =
+    {
+        data: string
     };

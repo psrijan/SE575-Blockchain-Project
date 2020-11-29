@@ -11,7 +11,7 @@
             <b-col sm="6">
               <b-form-input
                 size="sm"
-                v-model="cardData.block_id"
+                v-model="cardData.parent_hash"
                 readonly
               ></b-form-input>
             </b-col>
@@ -60,11 +60,11 @@
 
 <script lang="ts">
 import { Component, Prop, Emit, Watch, Vue } from "vue-property-decorator";
-import {BlockChain, CourseType} from "./BlockChainTypes";
+import {BlockElement} from "./BlockChainTypes";
 
 @Component
 export default class EventsChild extends Vue {
-  @Prop() private cardData!: BlockChain;
+  @Prop() private cardData!: BlockElement;
   private cardDataChanged = false
 
   @Emit('update-class-info')
