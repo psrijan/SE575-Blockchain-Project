@@ -1,11 +1,16 @@
-export type CourseType = {id: number; code: string; level: string; title: string};
-export type BlockChain =
+// export type CourseType = {id: number; code: string; level: string; title: string};
+export type BlockElement =
     {
-        query: string;
-        block_hash: string;
+        hash: string;
+        previousHash: string;
+        blockName: string;
+        data: string;
+        timestamp: number;
         nonce: number;
-        execution_time_ms: number;
-        found: boolean;
-        parent_hash: string;
-        "block_id" : string
+        executionTime : number
+    };
+
+export type BlockCreate =
+    {
+        data: string
     };

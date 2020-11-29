@@ -30,26 +30,55 @@
               </b-col>
             </b-row>
             <b-row class="my-1">
-              <b-col sm="2" class="offset-sm-2">
-                <label for="pub-id">Pub API:</label>
-              </b-col>
-              <b-col sm="6">
-                <b-input-group prepend="ID:">
+              <b-col sm="3" class="offset-sm-2">
+                <b-input-group prepend="Difficulty:">
                   <b-form-input
-                    id="pub-id"
-                    type="number"
-                    v-model="searchPubId"
+                    id="difficulty-id"
+                    type="text"
+                    v-model="difficulty"
                   ></b-form-input>
-                  <b-button variant="info" @click="searchById()"
-                    >Search</b-button
-                  >
+                </b-input-group>
+              </b-col>
+              <b-col sm="3">
+                <b-input-group prepend="Attempts:">
+                  <b-form-input
+                    id="attempts-id"
+                    type="number"
+                    v-model="attempts"
+                  ></b-form-input>
+                </b-input-group>
+              </b-col>
+              <b-col sm="3">
+                  <b-button variant="success" v-b-modal.create-modal @click="createModal()">Create a new Block</b-button>
+                  <b-modal id="create-modal" title="Create a new Block">
+                    <div class="d-block text-center">
+                      <p>
+                        Please enter the new block data:
+                      </p>
+                      <b-form-textarea
+                        id="block-data"
+                        v-model="newBlockData"
+                        rows="3"
+                      ></b-form-textarea>
+                    </div>
+                    <template #modal-footer>
+                      <div class="w-100">
+                        <b-button
+                          variant="primary"
+                          size="sm"
+                          class="float-right"
+                          @click="createBlock()"
+                        >
+                          Create
+                        </b-button>
+                      </div>
+                    </template>
+                  </b-modal>
+                <!--
                   <b-button variant="primary" class="ml-2" @click="getAll()"
                     >Get All</b-button
                   >
-                  <b-button variant="success" class="ml-2" @click="createNew()"
-                    >Create Pub</b-button
-                  >
-                </b-input-group>
+                -->
               </b-col>
             </b-row>
             <b-row>
@@ -74,58 +103,64 @@
     <div class="row">
       <div
         class="col-sm-6 mb-2"
-        v-for="(course, index) in blockList"
+        v-for="(block, index) in blockList"
         :key="index"
       >
         <pub-child
-          :card-data="course"
-          @update-class-info="onUpdateClass"
+          :card-data="block"
         ></pub-child>
       </div>
     </div>
   </div>
 </template>
-  
+
 
 <script lang="ts">
-import { Component, Prop, Emit, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import Pub from "./CardElement.vue";
-import { AxiosResponse, AxiosError } from "axios";
-import { CourseType, BlockChain } from "./BlockChainTypes";
+import { BlockElement, BlockCreate } from "./BlockChainTypes";
 
 @Component({ components: { "pub-child": Pub } })
 export default class ServiceParent extends Vue {
-  private blockList: BlockChain[] = [];
+  private blockList: BlockElement[] = [];
   private defaultServerAddress = "http://localhost:3000";
-  private searchPubId = "1";
   private showErrorBanner = false;
   private errorMessage = "";
   private showOkBanner = false;
   private okMessage = "";
+  private newBlockData = "";
+  private difficulty = "000";
+  private attempts = 10000;
 
-  searchById() {
-    console.log("searchbyid");
-    this.showErrorBanner =  false;
+
+  createModal() {
+    this.newBlockData = "";
+    this.$bvModal.show('create-modal')
+  }
+  createBlock() {
+    console.log("Create Block");
+    this.showErrorBanner = false;
     this.showOkBanner =  false;
-    this.blockList = [];
-    const endpoint = this.defaultServerAddress + "/courses/" + this.searchPubId;
-    this.$http
-      .get<BlockChain>(endpoint)
-      .then((response) => {
-        this.okMessage = "Fetched Course with ID: " + this.searchPubId;
-        this.showOkBanner = true;
-        const result = response.data;
-        this.blockList = [result];
-        console.log(result);
-      })
-      .catch((err: AxiosError) => {
-        console.log("ERROR ", err.response);
-        this.errorMessage = "HTTP Error:" 
-            + err.response!.status
-            + "; Msg: "+ err.response!.statusText;
-        this.showErrorBanner = true;
-        this.showOkBanner =  false;
-      });
+
+    /* Hide modal and capture data as post payload */
+    this.$bvModal.hide('create-modal');
+    const payload: BlockCreate = {data: this.newBlockData};
+    console.log(payload);
+    const endpoint = this.defaultServerAddress + "/blockchain";
+
+    /* Make post request to the server */
+    this.$http.post(endpoint, payload).then((response) => {
+      const result = response.data;
+      // this.blockList = result;
+      this.okMessage = response.statusText;
+      this.showOkBanner = true;
+      console.log(result);
+      this.getAll();
+    }).catch(error => {
+      this.errorMessage = "ERROR: " + error.message;
+      this.showErrorBanner = true;
+      console.error("There was an error!", error);
+    });
   }
 
   getAll() {
@@ -134,7 +169,7 @@ export default class ServiceParent extends Vue {
     this.showOkBanner =  false;
     this.blockList = [];
     const endpoint = this.defaultServerAddress + "/blockchain";
-    this.$http.get<BlockChain[]>(endpoint).then((response) => {
+    this.$http.get<BlockElement[]>(endpoint).then((response) => {
       const result = response.data;
       this.blockList = result;
       this.okMessage = "Fetched All Blocks - Total Received: " + this.blockList.length ;
@@ -143,18 +178,6 @@ export default class ServiceParent extends Vue {
     });
   }
 
-  onUpdateClass(c: CourseType) {
-    this.showOkBanner =  false;
-    this.blockList = [];
-    this.errorMessage = "Not Imnplemented Yet";
-    this.showErrorBanner = true;
-  }
-  createNew() {
-    this.showOkBanner =  false;
-    this.blockList = [];
-    this.errorMessage = "Not Imnplemented Yet";
-    this.showErrorBanner = true;
-  }
 }
 </script>
 
