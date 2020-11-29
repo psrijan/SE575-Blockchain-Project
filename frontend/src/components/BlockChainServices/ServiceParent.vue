@@ -108,7 +108,6 @@
       >
         <pub-child
           :card-data="block"
-          @update-class-info="onUpdateClass"
         ></pub-child>
       </div>
     </div>
@@ -117,16 +116,14 @@
 
 
 <script lang="ts">
-import { Component, Prop, Emit, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import Pub from "./CardElement.vue";
-import { AxiosResponse, AxiosError } from "axios";
 import { BlockElement, BlockCreate } from "./BlockChainTypes";
 
 @Component({ components: { "pub-child": Pub } })
 export default class ServiceParent extends Vue {
   private blockList: BlockElement[] = [];
   private defaultServerAddress = "http://localhost:3000";
-  // private searchPubId = "1";
   private showErrorBanner = false;
   private errorMessage = "";
   private showOkBanner = false;
@@ -142,11 +139,28 @@ export default class ServiceParent extends Vue {
   }
   createBlock() {
     console.log("Create Block");
-    // console.log(this.newBlockData);
+    this.showErrorBanner = false;
+    this.showOkBanner =  false;
+
+    /* Hide modal and capture data as post payload */
     this.$bvModal.hide('create-modal');
     const payload: BlockCreate = {data: this.newBlockData};
     console.log(payload);
+    const endpoint = this.defaultServerAddress + "/blockchain";
 
+    /* Make post request to the server */
+    this.$http.post(endpoint, payload).then((response) => {
+      const result = response.data;
+      // this.blockList = result;
+      this.okMessage = response.statusText;
+      this.showOkBanner = true;
+      console.log(result);
+      this.getAll();
+    }).catch(error => {
+      this.errorMessage = "ERROR: " + error.message;
+      this.showErrorBanner = true;
+      console.error("There was an error!", error);
+    });
   }
 
   getAll() {

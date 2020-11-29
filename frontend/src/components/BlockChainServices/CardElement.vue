@@ -11,7 +11,7 @@
             <b-col sm="6">
               <b-form-input
                 size="sm"
-                v-model="cardData.parent_hash"
+                v-model="cardData.blockName"
                 readonly
               ></b-form-input>
             </b-col>
@@ -21,7 +21,23 @@
               <label>Block Hash:</label>
             </b-col>
             <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.block_hash"></b-form-input>
+              <b-form-input size="sm" v-model="cardData.hash"></b-form-input>
+            </b-col>
+          </b-row>
+          <b-row class="my-1">
+            <b-col sm="3" class="offset-sm-2 text-left">
+              <label>Parent hash:</label>
+            </b-col>
+            <b-col sm="6">
+              <b-form-input size="sm" v-model="cardData.previousHash"></b-form-input>
+            </b-col>
+          </b-row>
+          <b-row class="my-1">
+            <b-col sm="3" class="offset-sm-2 text-left">
+              <label>Data:</label>
+            </b-col>
+            <b-col sm="6">
+              <b-form-input size="sm" v-model="cardData.data"></b-form-input>
             </b-col>
           </b-row>
           <b-row class="my-1">
@@ -29,7 +45,7 @@
               <label>Execution Time:</label>
             </b-col>
             <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.execution_time_ms"></b-form-input>
+              <b-form-input size="sm" v-model="cardData.executionTime"></b-form-input>
             </b-col>
           </b-row>
           <b-row class="my-1">

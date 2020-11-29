@@ -52,23 +52,25 @@
     
     "blockchain" : [
         {
-            "query" : "xxx",
-            "block_hash" : "123456",
-            "nonce" : 123,
-            "execution_time_ms" : 2,
-            "found" : true,
-            "parent_hash" : "bbb",
-            "block_id" : "x"
+            "id": 1,
+            "hash" : "xxx",
+            "previousHash" : "123456",
+            "blockName" : "123",
+            "data" : "data",
+            "timestamp" : 123,
+            "nonce" : 123456,
+            "executionTime" : 21
         },
         
         {
-            "query" : "yyy",
-            "block_hash" : "654321",
-            "nonce" : 987,
-            "execution_time_ms" : 4,
-            "found" : true,
-            "parent_hash" : "123456",
-            "block_id" : "y"
+            "id": 2,
+            "hash" : "xxx",
+            "previousHash" : "123456",
+            "blockName" : "123",
+            "data" : "data",
+            "timestamp" : 123,
+            "nonce" : 123456,
+            "executionTime" : 21
         }
     ]
 }
