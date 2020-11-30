@@ -2,6 +2,7 @@ package com.crypto.CryptoBackend.service;
 
 import com.crypto.CryptoBackend.core.Block;
 import com.crypto.CryptoBackend.core.BlockchainCore;
+import com.crypto.CryptoBackend.dto.AddBlockRequest;
 import com.crypto.CryptoBackend.dto.AddBlockResponse;
 import com.crypto.CryptoBackend.dto.BaseResponse;
 import com.crypto.CryptoBackend.dto.BlockResponse;
@@ -27,8 +28,10 @@ public class BlockchainService {
     @Autowired
     private BlockchainCore blockchainCore;
 
-    public AddBlockResponse addNewBlock(Block block) {
-        int index = blockchainCore.addNewBlock(block);
+    public AddBlockResponse addNewBlock(AddBlockRequest blockRequest) {
+        String blockName = "Block " + BlockchainCore.index;
+        Block block = new Block(blockName, blockRequest.data, BlockchainCore.mostRecentHash);
+        int index = blockchainCore.addNewBlock(block, blockRequest.difficulty);
         AddBlockResponse response = modelMapper.map(block, AddBlockResponse.class);
         response.setSuccess(index != -1);
         response.setIndex(index);

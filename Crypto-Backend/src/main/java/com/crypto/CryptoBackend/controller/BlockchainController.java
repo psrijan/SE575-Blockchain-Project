@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(origins = "*") // Allow all origins to talk to this controller
 @RequestMapping("crypto")
 @RestController
 public class BlockchainController {
@@ -40,8 +41,7 @@ public class BlockchainController {
 
     @PostMapping("add")
     public AddBlockResponse addBlock(@RequestBody AddBlockRequest addBlockRequest) {
-        Block block = modelMapper.map(addBlockRequest, Block.class);
-        return baseService.addNewBlock(block);
+        return baseService.addNewBlock(addBlockRequest);
     }
 
     @GetMapping("valid")

@@ -12,5 +12,7 @@ export type BlockElement =
 
 export type BlockCreate =
     {
-        data: string
+        data: string,
+        difficulty: string,
+        attempts: number
     };

@@ -144,9 +144,9 @@ export default class ServiceParent extends Vue {
 
     /* Hide modal and capture data as post payload */
     this.$bvModal.hide('create-modal');
-    const payload: BlockCreate = {data: this.newBlockData};
+    const payload: BlockCreate = {data: this.newBlockData, difficulty: this.difficulty, attempts: this.attempts};
     console.log(payload);
-    const endpoint = this.defaultServerAddress + "/blockchain";
+    const endpoint = this.defaultServerAddress + "/crypto/add";
 
     /* Make post request to the server */
     this.$http.post(endpoint, payload).then((response) => {
@@ -168,7 +168,7 @@ export default class ServiceParent extends Vue {
     this.showErrorBanner = false;
     this.showOkBanner =  false;
     this.blockList = [];
-    const endpoint = this.defaultServerAddress + "/blockchain";
+    const endpoint = this.defaultServerAddress + "/crypto/all";
     this.$http.get<BlockElement[]>(endpoint).then((response) => {
       const result = response.data;
       this.blockList = result;

@@ -8,10 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class AddBlockRequest {
-    public String hash;
-    public String previousHash;
-    private String blockName;
-    private String data;
-    private long timestamp;
-    private int nonce;
+    public String data;
+    public String difficulty;
+    public long attempts;
 }

@@ -21,6 +21,8 @@ public class BlockchainCore
 	/* Set difficulty that must be solved */
 	public static int difficulty = 5;
 
+	public static String mostRecentHash = "0";
+
 	public List<Block> getAllBlocks() {
 	    return blockchain;
 	}
@@ -30,14 +32,16 @@ public class BlockchainCore
 	 * @param block
 	 * @return
 	 */
-	public int addNewBlock(Block block) {
-		block.mineBlock(5);
+	public int addNewBlock(Block block, String difficulty) {
+		BlockchainCore.difficulty = difficulty.length();
+		block.mineBlock(difficulty);
 		blockchain.add(block);
-		index++;
 		if (!isValid()) {
 			blockchain.remove(index);
 			return -1;
 		}
+		index++;
+		mostRecentHash = block.hash;
 		return index;
 	}
 
