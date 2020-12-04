@@ -3,7 +3,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * @author Phat Ngo
- * [1.27112020]
+ * [1.30112020]
  * 
  * SE 575 - Software Design
  * Blockchain
@@ -20,17 +20,6 @@ public class Blockchain
 	
 	public static void main(String[] args)
 	{
-		/* Test Code */
-		/*
-		Block blockOne = new Block("Block 1", "0");
-		System.out.println("Block 1 Hash: " + blockOne.hash);
-		
-		Block blockTwo = new Block("Block 2", blockOne.hash);
-		System.out.println("Block 2 Hash: " + blockTwo.hash);
-		
-		Block blockThree = new Block("Block 3", blockTwo.hash);
-		System.out.println("Block 3 Hash: " + blockThree.hash);
-		*/
 		
 		/* Adds Block Details
 		 * Outputs out Mined Blocks
@@ -62,6 +51,7 @@ public class Blockchain
 	}
 	
 	
+	/** Proof of Work - Simple - Hashcash **/
 	/* Method to verify/compare hashes of the the blocks in the chain
 	 * Returns whether or not the chain is valid and untampered
 	 */
