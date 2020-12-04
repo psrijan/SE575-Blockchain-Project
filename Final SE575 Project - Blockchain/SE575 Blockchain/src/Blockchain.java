@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import com.google.gson.GsonBuilder;
 
 /**
- * @author Phat Ngo
  * [1.30112020]
  * 
  * SE 575 - Software Design

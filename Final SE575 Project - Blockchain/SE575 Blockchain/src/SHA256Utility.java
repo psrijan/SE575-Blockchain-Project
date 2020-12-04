@@ -1,7 +1,6 @@
 import java.security.MessageDigest;
 
 /**
- * @author Phat Ngo
  * [1.26112020]
  * 
  * SE 575 - Software Design

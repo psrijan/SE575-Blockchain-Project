@@ -1,7 +1,6 @@
 import java.util.Date;
 
 /**
- * @author Phat Ngo
  * [1.27112020]
  * 
  * SE 575 - Software Design
