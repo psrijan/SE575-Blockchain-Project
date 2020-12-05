@@ -1,6 +1,6 @@
-package com.crypto.CryptoBackend.repository;
+package com.crypto.backend.repository;
 
-import com.crypto.CryptoBackend.entities.BaseMessage;
+import com.crypto.backend.entities.BaseMessage;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

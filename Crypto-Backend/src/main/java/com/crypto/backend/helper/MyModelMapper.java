@@ -1,4 +1,4 @@
-package com.crypto.CryptoBackend.helper;
+package com.crypto.backend.helper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

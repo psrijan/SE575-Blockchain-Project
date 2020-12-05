@@ -1,4 +1,4 @@
-package com.crypto.CryptoBackend.dto;
+package com.crypto.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

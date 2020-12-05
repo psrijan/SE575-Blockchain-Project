@@ -1,4 +1,4 @@
-package com.crypto.CryptoBackend.dto;
+package com.crypto.backend.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,4 +13,5 @@ public class BlockResponse {
     private String data;
     private long timestamp;
     private int nonce;
+    private long executionTime;
 }

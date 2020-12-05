@@ -1,8 +1,7 @@
-package com.crypto.CryptoBackend.core;
+package com.crypto.backend.core;
 
-import com.crypto.CryptoBackend.helper.SHA256Utility;
+import com.crypto.backend.helper.SHA256Utility;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -21,21 +20,31 @@ import java.util.Date;
 public class Block
 {
 	/* Block Details */
-	public String hash;
-	public String previousHash;
-	private String blockName;
+	private String hash;
+	private String previousHash;
+	private Integer blockId;
 	private String data;
 	private long timestamp;
 	private int nonce;
+	private Long executionTime;
+	private boolean isValid;
 
 	public Block() {
 
 	}
 
+	public Block(String data) {
+		this.data = data;
+	}
+
+	public String getBlockName() {
+		return "Block " + blockId;
+	}
+
 	/* Block Constructor */
-	public Block(String blockName, String data, String previousHash)
+	public Block(Integer id, String data, String previousHash)
 	{
-		this.blockName = blockName;
+		this.blockId = id;
 		this.data = data;
 		this.previousHash = previousHash;
 		this.timestamp = new Date().getTime();
@@ -47,7 +56,7 @@ public class Block
 	 */
 	public String calculateHash()
 	{
-		String calculatehash = SHA256Utility.applySHA256(previousHash + Long.toString(timestamp) + Integer.toString(nonce) + blockName + data);
+		String calculatehash = SHA256Utility.applySHA256(previousHash + Long.toString(timestamp) + Integer.toString(nonce) + getBlockName() + data);
 		return calculatehash;
 	}
 
@@ -62,6 +71,6 @@ public class Block
 			nonce++;
 			hash = calculateHash();
 		}
-		System.out.println("Block Mined : " + hash);
+		isValid = true;
 	}
 }

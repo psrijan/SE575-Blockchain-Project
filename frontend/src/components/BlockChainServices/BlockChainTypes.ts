@@ -1,4 +1,3 @@
-// export type CourseType = {id: number; code: string; level: string; title: string};
 export type BlockElement =
     {
         hash: string;
@@ -7,7 +6,7 @@ export type BlockElement =
         data: string;
         timestamp: number;
         nonce: number;
-        executionTime : number
+        executionTime: number
     };
 
 export type BlockCreate =
@@ -16,3 +15,4 @@ export type BlockCreate =
         difficulty: string,
         attempts: number
     };
+

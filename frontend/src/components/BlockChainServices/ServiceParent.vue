@@ -131,12 +131,16 @@ export default class ServiceParent extends Vue {
   private newBlockData = "";
   private difficulty = "000";
   private attempts = 10000;
-
+  static readonly GET_ALL_BLOCKS: string = "crypto/blocks";
+  static readonly UPDATE_BLOCK: string = "crypto/block/{id}";
+  static readonly NEW_BLOCK: string = "crypto/block/new";
+  static readonly VALIDATE: string = "crypto/valid";
 
   createModal() {
     this.newBlockData = "";
     this.$bvModal.show('create-modal')
   }
+
   createBlock() {
     console.log("Create Block");
     this.showErrorBanner = false;
@@ -146,7 +150,7 @@ export default class ServiceParent extends Vue {
     this.$bvModal.hide('create-modal');
     const payload: BlockCreate = {data: this.newBlockData, difficulty: this.difficulty, attempts: this.attempts};
     console.log(payload);
-    const endpoint = this.defaultServerAddress + "/crypto/add";
+    const endpoint = this.defaultServerAddress + "/crypto/block/new";
 
     /* Make post request to the server */
     this.$http.post(endpoint, payload).then((response) => {
@@ -168,7 +172,7 @@ export default class ServiceParent extends Vue {
     this.showErrorBanner = false;
     this.showOkBanner =  false;
     this.blockList = [];
-    const endpoint = this.defaultServerAddress + "/crypto/all";
+    const endpoint = this.defaultServerAddress + "/crypto/blocks";
     this.$http.get<BlockElement[]>(endpoint).then((response) => {
       const result = response.data;
       this.blockList = result;
@@ -177,6 +181,8 @@ export default class ServiceParent extends Vue {
       console.log(result);
     });
   }
+
+
 
 }
 </script>

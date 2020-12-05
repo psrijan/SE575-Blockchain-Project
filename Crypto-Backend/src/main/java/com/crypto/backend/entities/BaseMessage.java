@@ -1,4 +1,4 @@
-package com.crypto.CryptoBackend.entities;
+package com.crypto.backend.entities;
 
 import lombok.Getter;
 import lombok.Setter;

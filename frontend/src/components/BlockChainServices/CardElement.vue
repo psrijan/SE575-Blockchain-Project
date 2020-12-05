@@ -85,6 +85,7 @@ export default class EventsChild extends Vue {
 
   @Emit('update-class-info')
   updateClass() {
+    console.log("update button clicked!!"); 
     this.cardDataChanged = false
     return this.cardData
   }
