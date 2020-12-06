@@ -76,19 +76,42 @@
 
 <script lang="ts">
 import { Component, Prop, Emit, Watch, Vue } from "vue-property-decorator";
-import {BlockElement} from "./BlockChainTypes";
-
+import {BlockElement} from "../models/BlockChainTypes";
+import {UrlConstants} from "../constants/Constants"
+import {BaseMessage} from "../models/intermediatedtos"
+import BlockStore from "@/store/BlockStore"
+import { HttpService } from "../services/HttpService"
 @Component
-export default class EventsChild extends Vue {
+export default class BlockCard extends Vue {
   @Prop() private cardData!: BlockElement;
-  private cardDataChanged = false
+  @Prop() private baseUrl!: string; 
+  private errorMessage = "";
+  private cardDataChanged = false;
+  private message= "";    
+  httpService = new HttpService(this.baseUrl)
 
-  @Emit('update-class-info')
+  mounted() {
+    console.log("BASE URL: ", this.baseUrl);
+  }
+
   updateClass() {
     console.log("update button clicked!!"); 
-    this.cardDataChanged = false
-    return this.cardData
-  }
+    this.cardDataChanged = false;
+    const endpoint ="";
+    console.log(this.cardData.blockName)
+    const updateRespPromise: Promise<BaseMessage> = this.httpService.update(this.cardData.data, this.cardData.blockName);
+    updateRespPromise.then((resp) => {
+        if (resp.success) {
+            this.sendUpdateNotification();
+        } 
+    }) 
+    }
+
+    @Emit("update_me")
+    sendUpdateNotification() {
+        return true;
+    }
+
 
   @Watch('cardData', {immediate: false, deep: true})
   onCardDataChanged(){

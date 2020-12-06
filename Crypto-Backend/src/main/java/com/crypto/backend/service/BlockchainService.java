@@ -8,6 +8,7 @@ import com.crypto.backend.dto.request.UpdateBlockRequest;
 import com.crypto.backend.dto.response.AddBlockResponse;
 import com.crypto.backend.dto.response.BlockResponse;
 import com.crypto.backend.dto.response.UpdateBlockResponse;
+import com.crypto.backend.dto.server.ServerDTO;
 import com.crypto.backend.helper.MyModelMapper;
 import com.crypto.backend.repository.IBaseRepository;
 import org.slf4j.Logger;
@@ -34,14 +35,14 @@ public class BlockchainService {
 
     private Logger logger = LoggerFactory.getLogger(BlockchainService.class);
 
-    public AddBlockResponse addNewBlock(AddBlockRequest blockRequest) {
+    public BaseResponse addNewBlock(AddBlockRequest blockRequest) {
         logger.debug("Entering Add New Block Service...");
         Block block = new Block(blockchainCore.getIndex(), blockRequest.getData(), blockchainCore.getMostRecentHash());
         int index = blockchainCore.addNewBlock(block, blockRequest.getDifficulty());
-        AddBlockResponse response = modelMapper.map(block, AddBlockResponse.class);
-        response.setSuccess(index != -1);
-        response.setIndex(index);
-        return response;
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setSuccess(true);
+        baseResponse.setMessage(String.format("Successfully Added Block with id %d",index));
+        return baseResponse;
     }
 
     public List<BlockResponse> getAllBlocks() {
@@ -50,6 +51,7 @@ public class BlockchainService {
         if (blockList != null) {
             List<BlockResponse> responses = IntStream.range(0, blockList.size()).mapToObj(i -> {
                             BlockResponse blockResponse = modelMapper.map(blockList.get(i), BlockResponse.class);
+                            blockResponse.setBlockName(blockList.get(i).getBlockId());
                             blockResponse.setIndex(i);
                             return blockResponse;
                             }).collect(Collectors.toList());
@@ -66,10 +68,11 @@ public class BlockchainService {
         return baseResponse;
     }
 
-    public UpdateBlockResponse updateBlocks (Integer id, UpdateBlockRequest updateBlockRequest) {
+    public BaseResponse updateBlocks (Integer id, UpdateBlockRequest updateBlockRequest) {
         logger.debug("Entering Update Block Service...");
-        Block curBlock = new Block(updateBlockRequest.getData());
-        Block updatedBlock = blockchainCore.updateBlock(id, curBlock);
-        return new UpdateBlockResponse();
+        ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData());
+        return modelMapper.map(serverDTO, BaseResponse.class);
     }
+
+
 }

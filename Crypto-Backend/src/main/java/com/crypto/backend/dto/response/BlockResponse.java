@@ -9,9 +9,10 @@ public class BlockResponse {
     private int index;
     private String hash;
     private String previousHash;
-    private String blockName;
+    private int blockName;
     private String data;
     private long timestamp;
     private int nonce;
     private long executionTime;
+    private boolean isValid;
 }

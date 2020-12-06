@@ -1,11 +1,9 @@
 package com.crypto.backend.controller;
 
-import com.crypto.backend.dto.*;
+import com.crypto.backend.dto.BaseResponse;
 import com.crypto.backend.dto.request.AddBlockRequest;
 import com.crypto.backend.dto.request.UpdateBlockRequest;
-import com.crypto.backend.dto.response.AddBlockResponse;
 import com.crypto.backend.dto.response.BlockResponse;
-import com.crypto.backend.dto.response.UpdateBlockResponse;
 import com.crypto.backend.helper.MyModelMapper;
 import com.crypto.backend.service.BlockchainService;
 import org.slf4j.Logger;
@@ -47,7 +45,7 @@ public class BlockchainController {
     }
 
     @PostMapping("block/new")
-    public AddBlockResponse addBlock(@RequestBody AddBlockRequest addBlockRequest) {
+    public BaseResponse addBlock(@RequestBody AddBlockRequest addBlockRequest) {
         log.debug("Add New Blocks... AddBlockRequest: {}", addBlockRequest.toString());
         return baseService.addNewBlock(addBlockRequest);
     }
@@ -58,9 +56,14 @@ public class BlockchainController {
         return baseService.isBlockchainValid();
     }
 
-    @PutMapping("block/{id}")
-    public UpdateBlockResponse updateBlock(@PathVariable("id") Integer blockId, @RequestBody UpdateBlockRequest blockRequest ) {
+    @PutMapping("update/block/{id}")
+    public BaseResponse updateBlock(@PathVariable("id") Integer blockId, @RequestBody UpdateBlockRequest blockRequest) {
         log.debug("Update Block Response... BlockId: {} Message: {}", blockId, blockRequest);
         return baseService.updateBlocks(blockId, blockRequest);
     }
+
+//    @PostMapping("block/double/spend/{hash}")
+//    public BaseResponse doubleSpend(@PathParam("hash") String hash, @RequestBody AddBlockRequest addBlockRequest ) {
+//       log.debug("Double Spend Block...");
+//    }
 }

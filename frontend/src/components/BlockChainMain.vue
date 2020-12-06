@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @update_me="update">
     <h1> Blockchain Application </h1>
     <div class="row">
       <b-container>
@@ -36,8 +36,7 @@
                     id="difficulty-id"
                     type="text"
                     v-model="difficulty"
-                  ></b-form-input>
-                </b-input-group>
+                  ></b-form-input> </b-input-group>
               </b-col>
               <b-col sm="3">
                 <b-input-group prepend="Attempts:">
@@ -106,9 +105,9 @@
         v-for="(block, index) in blockList"
         :key="index"
       >
-        <pub-child
-          :card-data="block"
-        ></pub-child>
+        <block-card
+          :card-data="block" :base-url="defaultServerAddress" 
+        ></block-card>
       </div>
     </div>
   </div>
@@ -117,13 +116,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Pub from "./CardElement.vue";
-import { BlockElement, BlockCreate } from "./BlockChainTypes";
+import { BlockElement, BlockCreate } from "../models/BlockChainTypes";
+import BlockCard from "./BlockCard.vue";
+import  { HttpService } from "@/services/HttpService"
+import {BaseMessage} from "../models/intermediatedtos"
 
-@Component({ components: { "pub-child": Pub } })
+@Component({ components: { "block-card": BlockCard} })
 export default class ServiceParent extends Vue {
   private blockList: BlockElement[] = [];
-  private defaultServerAddress = "http://localhost:3000";
+  private defaultServerAddress = "http://localhost:8080";
   private showErrorBanner = false;
   private errorMessage = "";
   private showOkBanner = false;
@@ -131,10 +132,7 @@ export default class ServiceParent extends Vue {
   private newBlockData = "";
   private difficulty = "000";
   private attempts = 10000;
-  static readonly GET_ALL_BLOCKS: string = "crypto/blocks";
-  static readonly UPDATE_BLOCK: string = "crypto/block/{id}";
-  static readonly NEW_BLOCK: string = "crypto/block/new";
-  static readonly VALIDATE: string = "crypto/valid";
+  private httpService = new HttpService(this.defaultServerAddress);
 
   createModal() {
     this.newBlockData = "";
@@ -145,45 +143,37 @@ export default class ServiceParent extends Vue {
     console.log("Create Block");
     this.showErrorBanner = false;
     this.showOkBanner =  false;
-
     /* Hide modal and capture data as post payload */
     this.$bvModal.hide('create-modal');
     const payload: BlockCreate = {data: this.newBlockData, difficulty: this.difficulty, attempts: this.attempts};
     console.log(payload);
-    const endpoint = this.defaultServerAddress + "/crypto/block/new";
-
-    /* Make post request to the server */
-    this.$http.post(endpoint, payload).then((response) => {
-      const result = response.data;
-      // this.blockList = result;
-      this.okMessage = response.statusText;
-      this.showOkBanner = true;
-      console.log(result);
-      this.getAll();
-    }).catch(error => {
-      this.errorMessage = "ERROR: " + error.message;
-      this.showErrorBanner = true;
-      console.error("There was an error!", error);
+    const messagePromise: Promise<BaseMessage> = this.httpService.addBlock(payload);
+    messagePromise.then(msg => {
+        if (msg.success) {
+            this.okMessage = msg.message
+            this.showOkBanner = true;
+            this.blockList = msg.dto;
+        } else {
+            this.errorMessage = msg.message;
+            this.showErrorBanner = true;
+        }
     });
-  }
-
-  getAll() {
-    console.log("getall");
-    this.showErrorBanner = false;
-    this.showOkBanner =  false;
-    this.blockList = [];
-    const endpoint = this.defaultServerAddress + "/crypto/blocks";
-    this.$http.get<BlockElement[]>(endpoint).then((response) => {
-      const result = response.data;
-      this.blockList = result;
-      this.okMessage = "Fetched All Blocks - Total Received: " + this.blockList.length ;
-      this.showOkBanner = true;
-      console.log(result);
-    });
-  }
-
-
-
+    }
+    
+    update() {
+        console.log("Get All For Update...")
+        const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
+        messagePromise.then(msg => {
+        if (msg.success) {
+            this.okMessage = msg.message
+            this.showOkBanner = true;
+            this.blockList = msg.dto;
+        } else {
+            this.errorMessage = msg.message;
+            this.showErrorBanner = true;
+        }
+        });
+    }
 }
 </script>
 

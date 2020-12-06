@@ -37,9 +37,6 @@ public class Block
 		this.data = data;
 	}
 
-	public String getBlockName() {
-		return "Block " + blockId;
-	}
 
 	/* Block Constructor */
 	public Block(Integer id, String data, String previousHash)
@@ -56,7 +53,7 @@ public class Block
 	 */
 	public String calculateHash()
 	{
-		String calculatehash = SHA256Utility.applySHA256(previousHash + Long.toString(timestamp) + Integer.toString(nonce) + getBlockName() + data);
+		String calculatehash = SHA256Utility.applySHA256(previousHash + Long.toString(timestamp) + Integer.toString(nonce) + "Block" + getBlockId() + data);
 		return calculatehash;
 	}
 
