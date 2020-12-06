@@ -38,6 +38,7 @@ public class BlockchainService {
     public BaseResponse addNewBlock(AddBlockRequest blockRequest) {
         logger.debug("Entering Add New Block Service...");
         Block block = new Block(blockchainCore.getIndex(), blockRequest.getData(), blockchainCore.getMostRecentHash());
+        block.setDifficulty(blockRequest.getDifficulty());
         int index = blockchainCore.addNewBlock(block, blockRequest.getDifficulty());
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setSuccess(true);
@@ -49,13 +50,12 @@ public class BlockchainService {
         logger.debug("Entering Get All Blocks Service...");
         List<Block> blockList = blockchainCore.getAllBlocks();
         if (blockList != null) {
-            List<BlockResponse> responses = IntStream.range(0, blockList.size()).mapToObj(i -> {
+            return IntStream.range(0, blockList.size()).mapToObj(i -> {
                             BlockResponse blockResponse = modelMapper.map(blockList.get(i), BlockResponse.class);
                             blockResponse.setBlockName(blockList.get(i).getBlockId());
                             blockResponse.setIndex(i);
                             return blockResponse;
                             }).collect(Collectors.toList());
-            return responses;
         }
         return new ArrayList<>();
     }
@@ -73,6 +73,4 @@ public class BlockchainService {
         ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData());
         return modelMapper.map(serverDTO, BaseResponse.class);
     }
-
-
 }

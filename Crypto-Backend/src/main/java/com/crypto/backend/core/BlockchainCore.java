@@ -23,6 +23,7 @@ public class BlockchainCore {
     private int difficulty = 5;
 
     public List<Block> getAllBlocks() {
+        isValid();
         return blockchain;
     }
 
@@ -43,7 +44,7 @@ public class BlockchainCore {
     public int addNewBlock(Block block, String difficulty) {
         Long startTime = System.currentTimeMillis();
         this.difficulty = difficulty.length();
-        block.mineBlock(difficulty);
+        block.mineBlock(difficulty, false);
         blockchain.add(block);
         long endTime = System.currentTimeMillis();
         block.setExecutionTime(endTime - startTime);
@@ -88,10 +89,15 @@ public class BlockchainCore {
     }
 
     public ServerDTO updateBlock(Integer id, String data) {
+        int pid;
         Optional<Block> optBlock = blockchain.stream().filter(block -> block.getBlockId().equals(id)).findFirst();
         if (optBlock.isPresent()) {
             Block block = optBlock.get();
             block.setData(data);
+            pid = block.getBlockId();
+            String parentHash = (id <= 0)? "0": blockchain.get(pid - 1).getHash();
+            block.setPreviousHash(parentHash); // there is a remote chance that the parent could have been changed as well. Which would cause the new hash to also mismatch because we will be using the older parents hash.
+            block.mineBlock(block.getDifficulty(), true);
             isValid();
             return new ServerDTO(true, "Successfully updated the block" );
         }

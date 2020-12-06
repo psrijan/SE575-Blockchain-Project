@@ -28,6 +28,7 @@ public class Block
 	private int nonce;
 	private Long executionTime;
 	private boolean isValid;
+	private String difficulty;
 
 	public Block() {
 
@@ -59,15 +60,19 @@ public class Block
 
 	/* Method to mine the blocks and adds the number of '0's based on set difficulty
 	 */
-	public void mineBlock(String difficultyString, int limit)
+	public void mineBlock(String difficultyString, boolean remine, int limit)
 	{
 		int difficulty = difficultyString.length();
 		String target = new String(new char[difficulty]).replace('\0', '0');
 		System.out.println("Target: " + target);
+		if (remine)
+			this.hash = calculateHash();
 		while(nonce < limit && !hash.substring(0, difficulty).equals(target)) {
 			nonce++;
 			hash = calculateHash();
+			remine = false;
 		}
 		isValid = true;
 	}
+
 }
