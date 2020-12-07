@@ -9,5 +9,5 @@ import lombok.ToString;
 @Setter
 public class UpdateBlockRequest {
     private String data;
-    private int limit;
+    private int attempts;
 }

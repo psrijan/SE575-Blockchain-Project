@@ -15,4 +15,5 @@ public class BlockResponse {
     private int nonce;
     private long executionTime;
     private boolean isValid;
+    private int attempts;
 }

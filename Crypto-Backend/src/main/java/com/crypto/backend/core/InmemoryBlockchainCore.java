@@ -101,6 +101,7 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
         if (optBlock.isPresent()) {
             Block block = optBlock.get();
             block.setData(data);
+            block.setAttempts(limit);
             pid = block.getBlockId();
             String parentHash = (id <= 0)? "0": blockchain.get(pid - 1).getHash();
             block.setPreviousHash(parentHash); // there is a remote chance that the parent could have been changed as well. Which would cause the new hash to also mismatch because we will be using the older parents hash.

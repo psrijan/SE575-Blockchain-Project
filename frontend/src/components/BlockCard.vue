@@ -62,6 +62,15 @@
             </b-col>
           </b-row>
 
+            <b-row class="my-1">
+            <b-col sm="3" class="offset-sm-2 text-left">
+              <label>Attempt Limit:</label>
+            </b-col>
+            <b-col sm="6">
+              <b-form-input size="sm" v-model="cardData.attempts"></b-form-input>
+            </b-col>
+          </b-row>
+
           <b-row class="my-1">
           </b-row>
           <b-row class="my-2">
@@ -98,7 +107,7 @@ export default class BlockCard extends Vue {
   updateClass() {
     console.log("update button clicked!!");
     console.log(this.cardData.blockName);
-    const updateRespPromise: Promise<BaseMessage> = this.httpService.update(this.cardData.data, this.cardData.blockName);
+    const updateRespPromise: Promise<BaseMessage> = this.httpService.update(this.cardData.data, this.cardData.blockName, this.cardData.attempts);
     updateRespPromise.then((resp) => {
       console.log(resp)
       if (resp.success) {

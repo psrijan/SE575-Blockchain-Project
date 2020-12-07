@@ -44,9 +44,9 @@ export class HttpService {
         });
     }
 
-    update(data: string, id: string)  {
+    update(data: string, id: string, attempts: number)  {
         console.log("Update Service Called...");
-        const payload = { "data": data };
+        const payload = { "data": data, "attempts": attempts };
 
         console.log("Update Request url: ", this.baseurl + UrlConstants.update);
         const updatePromose = this.instance.put(this.baseurl + UrlConstants.update + id, payload);

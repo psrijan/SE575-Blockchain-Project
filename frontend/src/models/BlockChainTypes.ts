@@ -6,6 +6,7 @@ export type BlockElement =
         data: string;
         timestamp: number;
         nonce: number;
+        attempts: number;
         executionTime: number;
         valid : boolean
     };

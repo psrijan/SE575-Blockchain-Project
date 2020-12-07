@@ -29,6 +29,7 @@ public class Block
 	private Long executionTime;
 	private boolean isValid;
 	private String difficulty;
+	private int attempts;
 
 	public Block() {
 
@@ -39,13 +40,14 @@ public class Block
 	}
 
 	/* Block Constructor */
-	public Block(Integer id, String data, String previousHash)
+	public Block(Integer id, String data, String previousHash, int limit)
 	{
 		this.blockId = id;
 		this.data = data;
 		this.previousHash = previousHash;
 		this.timestamp = new Date().getTime();
 		this.hash = calculateHash();
+		this.attempts = limit;
 	}
 
 	/* Function to calculate the hash with Block Details
