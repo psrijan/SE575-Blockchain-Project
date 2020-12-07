@@ -1,6 +1,6 @@
 export const UrlConstants = {
-    add: '/crypto/block/new',
+    add: '/crypto/block',
     all: '/crypto/blocks',
     valid: '/crypto/valid',
-    update: '/crypto/update/block/'
+    update: '/crypto/block/'
   };

@@ -44,7 +44,7 @@ public class BlockchainController {
         return baseService.getAllBlocks();
     }
 
-    @PostMapping("block/new")
+    @PostMapping("block")
     public BaseResponse addBlock(@RequestBody AddBlockRequest addBlockRequest) {
         log.debug("Add New Blocks... AddBlockRequest: {}", addBlockRequest.toString());
         return baseService.addNewBlock(addBlockRequest);
@@ -56,7 +56,7 @@ public class BlockchainController {
         return baseService.isBlockchainValid();
     }
 
-    @PutMapping("update/block/{id}")
+    @PutMapping("block/{id}")
     public BaseResponse updateBlock(@PathVariable("id") Integer blockId, @RequestBody UpdateBlockRequest blockRequest) {
         log.debug("Update Block Response... BlockId: {} Message: {}", blockId, blockRequest);
         return baseService.updateBlocks(blockId, blockRequest);
