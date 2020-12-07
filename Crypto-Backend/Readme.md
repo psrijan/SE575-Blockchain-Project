@@ -24,4 +24,19 @@ Same Request:
 }
 ```
 4 Is Valid: (http://localhost:8080/crypto/valid)
-- GET request
+GET request
+
+
+Proper URL Naming Convention:
+
+
+Segregation of different modules
+
+Encapsulation of data.
+
+Use of streams.
+
+Proper handling of cross cutting concerns using advice. 
+
+
+

@@ -9,8 +9,8 @@
 
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import ServicesParent from '@/components/BlockChainServices/ServiceParent.vue'
+import { Component, Vue } from "vue-property-decorator";
+import ServicesParent from '@/components/BlockChainMain.vue'
 
 @Component({
   components: {"web-services-demo": ServicesParent}
