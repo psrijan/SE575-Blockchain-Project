@@ -27,7 +27,7 @@ public class DBBlockchainCore implements IBlockchainCore {
     }
 
     @Override
-    public int addNewBlock(Block block, String difficulty) {
+    public int addNewBlock(Block block, String difficulty, int limit) {
         return 0;
     }
 
@@ -37,7 +37,7 @@ public class DBBlockchainCore implements IBlockchainCore {
     }
 
     @Override
-    public ServerDTO updateBlock(Integer id, String data) {
+    public ServerDTO updateBlock(Integer id, String data, int limit) {
         return null;
     }
 }

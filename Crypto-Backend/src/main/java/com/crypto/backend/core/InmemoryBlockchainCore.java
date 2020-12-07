@@ -46,10 +46,10 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
      * @return
      */
     @Override
-    public int addNewBlock(Block block, String difficulty) {
+    public int addNewBlock(Block block, String difficulty, int limit) {
         Long startTime = System.currentTimeMillis();
         this.difficulty = difficulty.length();
-        block.mineBlock(difficulty, false);
+        block.mineBlock(difficulty, false, limit);
         blockchain.add(block);
         long endTime = System.currentTimeMillis();
         block.setExecutionTime(endTime - startTime);
@@ -95,7 +95,7 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
     }
 
     @Override
-    public ServerDTO updateBlock(Integer id, String data) {
+    public ServerDTO updateBlock(Integer id, String data, int limit) {
         int pid;
         Optional<Block> optBlock = blockchain.stream().filter(block -> block.getBlockId().equals(id)).findFirst();
         if (optBlock.isPresent()) {
@@ -104,7 +104,7 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
             pid = block.getBlockId();
             String parentHash = (id <= 0)? "0": blockchain.get(pid - 1).getHash();
             block.setPreviousHash(parentHash); // there is a remote chance that the parent could have been changed as well. Which would cause the new hash to also mismatch because we will be using the older parents hash.
-            block.mineBlock(block.getDifficulty(), true);
+            block.mineBlock(block.getDifficulty(), true, limit);
             isValid();
             return new ServerDTO(true, "Successfully updated the block" );
         }

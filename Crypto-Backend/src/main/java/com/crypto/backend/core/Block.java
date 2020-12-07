@@ -38,7 +38,6 @@ public class Block
 		this.data = data;
 	}
 
-
 	/* Block Constructor */
 	public Block(Integer id, String data, String previousHash)
 	{
@@ -54,8 +53,7 @@ public class Block
 	 */
 	public String calculateHash()
 	{
-		String calculatehash = SHA256Utility.applySHA256(previousHash + Long.toString(timestamp) + Integer.toString(nonce) + "Block" + getBlockId() + data);
-		return calculatehash;
+		return SHA256Utility.applySHA256(previousHash + timestamp + nonce + "Block" + getBlockId() + data);
 	}
 
 	/* Method to mine the blocks and adds the number of '0's based on set difficulty

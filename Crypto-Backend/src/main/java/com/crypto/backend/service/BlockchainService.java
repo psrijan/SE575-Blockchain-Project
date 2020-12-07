@@ -39,7 +39,7 @@ public class BlockchainService {
         logger.debug("Entering Add New Block Service...");
         Block block = new Block(blockchainCore.getIndex(), blockRequest.getData(), blockchainCore.getMostRecentHash());
         block.setDifficulty(blockRequest.getDifficulty());
-        int index = blockchainCore.addNewBlock(block, blockRequest.getDifficulty());
+        int index = blockchainCore.addNewBlock(block, blockRequest.getDifficulty(), blockRequest.getAttempts());
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setSuccess(true);
         baseResponse.setMessage(String.format("Successfully Added Block with id %d",index));
@@ -70,7 +70,7 @@ public class BlockchainService {
 
     public BaseResponse updateBlocks (Integer id, UpdateBlockRequest updateBlockRequest) {
         logger.debug("Entering Update Block Service...");
-        ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData());
+        ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData(), updateBlockRequest.getLimit());
         return modelMapper.map(serverDTO, BaseResponse.class);
     }
 }
