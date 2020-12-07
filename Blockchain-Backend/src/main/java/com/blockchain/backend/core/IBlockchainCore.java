@@ -11,6 +11,8 @@ public interface IBlockchainCore {
 
     int getIndex();
 
+    void deleteBlocks();
+
     int addNewBlock(Block block, String difficulty, int limit);
 
     /* Method to verify/compare hashes of the the blocks in the chain
