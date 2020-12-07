@@ -1,15 +1,15 @@
 # Running the application
 1. Install mvn 
-2. cd Crypto-Backend
+2. cd Blockchain-Backend
 3. ./mvnw spring-boot:run
 
 # End Points
-1. Status: (http://localhost:8080/crypto)
+1. Status: (http://localhost:8080/blockchain)
 - Displays the status of the server. If the server is running returns server start timestamp
 - GET request
-2. Display All Crypto: (http://localhost:8080/crypto/all)
+2. Display All Blocks: (http://localhost:8080/blockchain/all)
 - GET request 
-3. Add Crypto: (http://localhost:8080/crypto/add)
+3. Add Blockchain: (http://localhost:8080/blockchain/add)
 - POST request
 ```
 Same Request: 
@@ -23,7 +23,7 @@ Same Request:
 
 }
 ```
-4 Is Valid: (http://localhost:8080/crypto/valid)
+4 Is Valid: (http://localhost:8080/blockchain/valid)
 GET request
 
 

@@ -34,7 +34,7 @@ export class HttpService {
 
     getAll (): any {
         console.log("getall");
-        const endpoint = this.baseurl+ "/crypto/blocks";
+        const endpoint = this.baseurl+ UrlConstants.all;
         return this.instance.get<BlockElement[]>(endpoint).then((response) => {
           const result = response.data;
           return new BaseMessage(true, "Fetched All Blocks : Total Received: " + result.length, response.statusText,result);
