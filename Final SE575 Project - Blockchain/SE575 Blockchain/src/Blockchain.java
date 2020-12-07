@@ -16,6 +16,9 @@ public class Blockchain
 	/* Set difficulty that must be solved */
 	public static int difficulty = 5;
 	
+	/* Number of attempts limited in case of block mining taking too much time */
+	public static int limit = 10000000;
+	
 	
 	public static void main(String[] args)
 	{
@@ -25,19 +28,19 @@ public class Blockchain
 		 */
 		blockchain.add(new Block("Block 1", "Hello, I am Block 1", "0"));
 		System.out.println("Block 1 mining attempt ...");
-		blockchain.get(0).mineBlock(difficulty);
+		blockchain.get(0).mineBlock(difficulty, limit);
 		
 		blockchain.add(new Block("Block 2", "Block 2, hey", blockchain.get(blockchain.size()-1).hash));
 		System.out.println("Block 2 mining attempt ...");
-		blockchain.get(1).mineBlock(difficulty);
+		blockchain.get(1).mineBlock(difficulty, limit);
 		
 		blockchain.add(new Block("Block 3", "Grettings, Block 3 here", blockchain.get(blockchain.size()-1).hash));
 		System.out.println("Block 3 mining attempt ...");
-		blockchain.get(2).mineBlock(difficulty);
+		blockchain.get(2).mineBlock(difficulty, limit);
 		
 		blockchain.add(new Block("Block 4", "Bonjour, Je suis Block 4", blockchain.get(blockchain.size()-1).hash));
 		System.out.println("Block 4 mining attempt ...");
-		blockchain.get(3).mineBlock(difficulty);
+		blockchain.get(3).mineBlock(difficulty, limit);
 		
 		System.out.println("\nBlockchain is Valid: " + isValid());
 		

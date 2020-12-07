@@ -43,15 +43,16 @@ public class Block
 	
 	/* Method to mine the blocks and adds the number of '0's based on set difficulty
 	 */
-	public void mineBlock(int difficulty)
+	public void mineBlock(int difficulty, int limit)
 	{
 		String target = new String(new char[difficulty]).replace('\0', '0');
 		
-		while(!hash.substring(0, difficulty).equals(target))
+		while(nonce < limit && !hash.substring(0, difficulty).equals(target))
 		{
 			nonce++;
 			
 			hash = calculateHash();
+			
 		}
 		
 		System.out.println("Block Mined : " + hash);
