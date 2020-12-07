@@ -62,8 +62,4 @@ public class BlockchainController {
         return baseService.updateBlocks(blockId, blockRequest);
     }
 
-//    @PostMapping("block/double/spend/{hash}")
-//    public BaseResponse doubleSpend(@PathParam("hash") String hash, @RequestBody AddBlockRequest addBlockRequest ) {
-//       log.debug("Double Spend Block...");
-//    }
 }

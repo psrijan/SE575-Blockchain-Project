@@ -8,6 +8,8 @@ import com.crypto.backend.dto.server.ServerDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.ApplicationScope;
 
+import javax.annotation.Resource;
+
 /**
  * @author Phat Ngo
  * [1.27112020]
@@ -15,21 +17,24 @@ import org.springframework.web.context.annotation.ApplicationScope;
  * SE 575 - Software Design
  * Blockchain
  */
-@Component
-public class BlockchainCore {
+@Component("inmemory")
+public class InmemoryBlockchainCore implements IBlockchainCore {
     static private ArrayList<Block> blockchain = new ArrayList<Block>();
     /* Set difficulty that must be solved */
     private int difficulty = 5;
 
+    @Override
     public List<Block> getAllBlocks() {
         isValid();
         return blockchain;
     }
 
+    @Override
     public String getMostRecentHash() {
         return (blockchain.size()== 0) ? "0" : blockchain.get(blockchain.size() -1).getHash();
     }
 
+    @Override
     public int getIndex() {
         return blockchain.size();
     }
@@ -40,6 +45,7 @@ public class BlockchainCore {
      * @param block
      * @return
      */
+    @Override
     public int addNewBlock(Block block, String difficulty) {
         Long startTime = System.currentTimeMillis();
         this.difficulty = difficulty.length();
@@ -53,6 +59,7 @@ public class BlockchainCore {
     /* Method to verify/compare hashes of the the blocks in the chain
      * Returns whether or not the chain is valid and untampered
      */
+    @Override
     public Boolean isValid() {
         Block currentBlock;
         Block previousBlock;
@@ -87,6 +94,7 @@ public class BlockchainCore {
         return isBlockChainValid;
     }
 
+    @Override
     public ServerDTO updateBlock(Integer id, String data) {
         int pid;
         Optional<Block> optBlock = blockchain.stream().filter(block -> block.getBlockId().equals(id)).findFirst();

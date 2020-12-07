@@ -1,7 +1,7 @@
 package com.crypto.backend.service;
 
 import com.crypto.backend.core.Block;
-import com.crypto.backend.core.BlockchainCore;
+import com.crypto.backend.core.InmemoryBlockchainCore;
 import com.crypto.backend.dto.*;
 import com.crypto.backend.dto.request.AddBlockRequest;
 import com.crypto.backend.dto.request.UpdateBlockRequest;
@@ -12,6 +12,7 @@ import com.crypto.backend.repository.IBaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public class BlockchainService {
     private MyModelMapper modelMapper;
 
     @Autowired
-    private BlockchainCore blockchainCore;
+    @Qualifier("inmemory")
+    private InmemoryBlockchainCore blockchainCore;
 
     private Logger logger = LoggerFactory.getLogger(BlockchainService.class);
 

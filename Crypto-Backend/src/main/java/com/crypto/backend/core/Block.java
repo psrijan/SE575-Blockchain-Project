@@ -65,12 +65,11 @@ public class Block
 		int difficulty = difficultyString.length();
 		String target = new String(new char[difficulty]).replace('\0', '0');
 		System.out.println("Target: " + target);
-		if (remine)
+		if (remine) // Because the first number of zeros in the start of the block actually match the target and it doesn't get mined
 			this.hash = calculateHash();
 		while(nonce < limit && !hash.substring(0, difficulty).equals(target)) {
 			nonce++;
 			hash = calculateHash();
-			remine = false;
 		}
 		isValid = true;
 	}
