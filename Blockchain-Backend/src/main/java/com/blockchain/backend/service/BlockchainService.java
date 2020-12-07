@@ -63,12 +63,6 @@ public class BlockchainService {
         return new ArrayList<>();
     }
 
-    public BaseResponse deleteBlocks() {
-        logger.debug("Entering Delete Block Service...");
-        blockchainCore.deleteBlocks();
-        return new BaseResponse(true, "Successfully Cleared Blockchain");
-    }
-
     public BaseResponse isBlockchainValid() {
         logger.debug("Entering Is Block Valid Service...");
         boolean valid = blockchainCore.isValid();

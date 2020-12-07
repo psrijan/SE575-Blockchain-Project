@@ -27,11 +27,6 @@ public class DBBlockchainCore implements IBlockchainCore {
     }
 
     @Override
-    public void deleteBlocks() {
-        return;
-    }
-
-    @Override
     public int addNewBlock(Block block, String difficulty, int limit) {
         return 0;
     }
@@ -45,6 +40,4 @@ public class DBBlockchainCore implements IBlockchainCore {
     public ServerDTO updateBlock(Integer id, String data, int limit) {
         return null;
     }
-
-
 }

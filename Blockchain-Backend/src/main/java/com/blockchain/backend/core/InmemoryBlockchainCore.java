@@ -109,9 +109,4 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
         }
         return new ServerDTO(false, String.format("Cannot find the block of ID: %d", id));
     }
-
-    @Override
-    public void deleteBlocks() {
-        blockchain = new ArrayList<>();
-    }
 }

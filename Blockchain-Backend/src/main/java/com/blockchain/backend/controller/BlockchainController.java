@@ -44,12 +44,6 @@ public class BlockchainController {
         return baseService.getAllBlocks();
     }
 
-    @DeleteMapping("blocks")
-    private BaseResponse deleteBlockchain() {
-       log.debug("Delete Blockchain...");
-       return baseService.deleteBlocks();
-    }
-
     @PostMapping("block")
     public BaseResponse addBlock(@RequestBody AddBlockRequest addBlockRequest) {
         log.debug("Add New Blocks... AddBlockRequest: {}", addBlockRequest.toString());
