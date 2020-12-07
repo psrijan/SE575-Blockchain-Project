@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card title="Block Record">
+    <b-card title="Block Record"  v-bind:class="{ active: cardData.valid, 'alert-warning ': !cardData.valid}">
       <b-card-text> Details </b-card-text>
       <b-card-text>
         <b-container>
@@ -16,6 +16,34 @@
               ></b-form-input>
             </b-col>
           </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="3" class="offset-sm-2 text-left">
+              <label>Parent hash:</label>
+            </b-col>
+            <b-col sm="6">
+              <b-form-input size="sm" v-model="cardData.previousHash" readonly></b-form-input>
+            </b-col>
+          </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="3" class="offset-sm-2 text-left">
+              <label> Attempts:</label>
+            </b-col>
+            <b-col sm="6">
+              <b-form-input size="sm" v-model="cardData.nonce" readonly></b-form-input>
+            </b-col>
+          </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="3" class="offset-sm-2 text-left">
+              <label>Execution Time:</label>
+            </b-col>
+            <b-col sm="6">
+              <b-form-input size="sm" v-model="cardData.executionTime" readonly></b-form-input>
+            </b-col>
+          </b-row>
+
           <b-row class="my-1">
             <b-col sm="3" class="offset-sm-2 text-left">
               <label>Block Hash:</label>
@@ -24,14 +52,7 @@
               <b-form-input size="sm" v-model="cardData.hash"></b-form-input>
             </b-col>
           </b-row>
-          <b-row class="my-1">
-            <b-col sm="3" class="offset-sm-2 text-left">
-              <label>Parent hash:</label>
-            </b-col>
-            <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.previousHash"></b-form-input>
-            </b-col>
-          </b-row>
+
           <b-row class="my-1">
             <b-col sm="3" class="offset-sm-2 text-left">
               <label>Data:</label>
@@ -40,22 +61,7 @@
               <b-form-input size="sm" v-model="cardData.data"></b-form-input>
             </b-col>
           </b-row>
-          <b-row class="my-1">
-            <b-col sm="3" class="offset-sm-2 text-left">
-              <label>Execution Time:</label>
-            </b-col>
-            <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.executionTime"></b-form-input>
-            </b-col>
-          </b-row>
-          <b-row class="my-1">
-            <b-col sm="3" class="offset-sm-2 text-left">
-              <label> Nonce:</label>
-            </b-col>
-            <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.nonce"></b-form-input>
-            </b-col>
-          </b-row>
+
           <b-row class="my-1">
           </b-row>
           <b-row class="my-2">
@@ -85,40 +91,29 @@ import { HttpService } from "../services/HttpService"
 @Component
 export default class BlockCard extends Vue {
   @Prop() private cardData!: BlockElement;
-  @Prop() private baseUrl!: string; 
+  @Prop() private baseUrl!: string;
   private cardDataChanged = false;
   httpService = new HttpService(this.baseUrl);
 
-  mounted() {
-    console.log("BASE URL: ", this.baseUrl);
-  }
-
   updateClass() {
-    console.log("update button clicked!!"); 
-    this.cardDataChanged = false;
+    console.log("update button clicked!!");
     console.log(this.cardData.blockName);
     const updateRespPromise: Promise<BaseMessage> = this.httpService.update(this.cardData.data, this.cardData.blockName);
     updateRespPromise.then((resp) => {
-        if (resp.success) {
-            this.sendUpdateNotification();
-        } 
-    }) 
-    }
-
-    @Emit("update_me")
-    sendUpdateNotification() {
-        return true;
-    }
+      console.log(resp)
+      if (resp.success) {
+        this.$emit('update_me')
+      }
+      this.cardDataChanged = false;
+    })
+  }
 
 
-  @Watch('cardData', {immediate: false, deep: true})
+  @Watch('cardData', {immediate: true, deep: true})
   onCardDataChanged(){
-      this.cardDataChanged = true
+      this.cardDataChanged = true;
   }
 
-  remine() {
-      console.log("Remine...")
-  }
 
 }
 </script>

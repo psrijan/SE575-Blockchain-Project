@@ -1,21 +1,11 @@
 <template>
-  <div @update_me="update">
+  <div>
     <h1> Blockchain Application </h1>
     <div class="row">
       <b-container>
         <b-card class="col-12" bg-variant="dark" text-variant="white">
           <b-card-text>
-            Before you start this demo make sure you have
-            <code>json-server</code> installed via <br />
-            <code>yarn global add json-server</code> or
-            <code>npm install -g json-server</code>
-            <br />
-            After that run the server from the <code>/server</code> directory
-            via
-            <br />
-            <code>start-test-server.sh</code>
-            <br />
-            Currently, only <code>Get All</code> will produce a useful result from the <code>blockchain</code> db.
+            Please ensure the backend is running, and enter its server address below.
           </b-card-text>
           <b-card-text>
             <b-row class="my-1">
@@ -101,7 +91,8 @@
         :key="index"
       >
         <block-card
-          :card-data="block" :base-url="defaultServerAddress" 
+          :card-data="block" :base-url="defaultServerAddress"
+          @update_me="update"
         ></block-card>
       </div>
     </div>
@@ -126,7 +117,7 @@ export default class ServiceParent extends Vue {
   private okMessage = "";
   private newBlockData = "";
   private difficulty = "000";
-  private attempts = 10000;
+  private attempts = 1000000;
   private httpService = new HttpService(this.defaultServerAddress);
 
   createModal() {
@@ -180,7 +171,7 @@ export default class ServiceParent extends Vue {
         }
     });
     }
-    
+
     update() {
         console.log("Get All For Update...");
         const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
@@ -198,6 +189,5 @@ export default class ServiceParent extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
