@@ -10,5 +10,5 @@ import lombok.ToString;
 public class AddBlockRequest {
     public String data;
     public String difficulty;
-    public long attempts;
+    public int attempts;
 }

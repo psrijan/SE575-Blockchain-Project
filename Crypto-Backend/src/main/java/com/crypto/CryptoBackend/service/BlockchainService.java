@@ -31,7 +31,7 @@ public class BlockchainService {
     public AddBlockResponse addNewBlock(AddBlockRequest blockRequest) {
         String blockName = "Block " + BlockchainCore.index;
         Block block = new Block(blockName, blockRequest.data, BlockchainCore.mostRecentHash);
-        int index = blockchainCore.addNewBlock(block, blockRequest.difficulty);
+        int index = blockchainCore.addNewBlock(block, blockRequest.difficulty, blockRequest.attempts);
         AddBlockResponse response = modelMapper.map(block, AddBlockResponse.class);
         response.setSuccess(index != -1);
         response.setIndex(index);

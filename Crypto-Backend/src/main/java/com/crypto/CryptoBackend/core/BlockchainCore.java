@@ -32,9 +32,9 @@ public class BlockchainCore
 	 * @param block
 	 * @return
 	 */
-	public int addNewBlock(Block block, String difficulty) {
+	public int addNewBlock(Block block, String difficulty, int limit) {
 		BlockchainCore.difficulty = difficulty.length();
-		block.mineBlock(difficulty);
+		block.mineBlock(difficulty, limit);
 		blockchain.add(block);
 		if (!isValid()) {
 			blockchain.remove(index);
