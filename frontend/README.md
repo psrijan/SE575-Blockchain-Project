@@ -42,6 +42,11 @@ Vue.use(IconsPlugin)
 
 ### Docker
 
+First, build and run the backend docker service. In a separate terminal, run the 
+folllowing commands:
+
 `docker build --tag bc-app .`
 
 `docker run -p 3000:80 bc-app`
+
+Then, access the UI by visiting [http://localhost:3000/](http://localhost:3000/)
