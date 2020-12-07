@@ -62,7 +62,7 @@ public class BlockchainController {
         return baseService.updateBlocks(blockId, blockRequest);
     }
 
-    @DeleteMapping("clear")
+    @DeleteMapping("blocks")
     public BaseResponse clearBlockchain() {
         log.debug("Clearing the blockchain...");
         return baseService.clearBlockchain();

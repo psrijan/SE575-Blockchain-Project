@@ -5,5 +5,5 @@ export const UrlConstants = {
     all: Endpoint + '/blocks',
     valid: Endpoint + '/valid',
     update: Endpoint + '/block/',
-    clear: Endpoint + '/clear/'
+    clear: Endpoint + '/blocks/'
   };
