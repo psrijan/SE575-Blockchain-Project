@@ -38,8 +38,8 @@
                   ></b-form-input>
                 </b-input-group>
               </b-col>
-              <b-col sm="3">
-                  <b-button variant="success" v-b-modal.create-modal @click="createModal()">Create a new Block</b-button>
+              <b-col sm="2">
+                  <b-button variant="success" v-b-modal.create-modal @click="createModal()">Create a Block</b-button>
                   <b-modal id="create-modal" title="Create a new Block">
                     <div class="d-block text-center">
                       <p>
