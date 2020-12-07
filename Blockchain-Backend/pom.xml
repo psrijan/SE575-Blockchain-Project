@@ -8,11 +8,11 @@
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.crypto</groupId>
-	<artifactId>Crypto-Backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Crypto-Backend</name>
-	<description>CS575 Crypto Backend</description>
+	<groupId>com.blockchain</groupId>
+	<artifactId>Blockchain-Backend</artifactId>
+	<version>1.0.0</version>
+	<name>Blockchain-Backend</name>
+	<description>CS575 Blockchain Backend</description>
 
 	<properties>
 		<java.version>1.8</java.version>

@@ -1,14 +1,14 @@
-package com.crypto.backend;
+package com.blockchain.backend;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CryptoBackendApplication implements CommandLineRunner {
+public class BlockchainBackendApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CryptoBackendApplication.class, args);
+		SpringApplication.run(BlockchainBackendApplication.class, args);
 	}
 
 	@Override

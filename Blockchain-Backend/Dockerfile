@@ -10,6 +10,6 @@ RUN mvn -f /home/app/pom.xml clean package
 # Package stage
 #
 FROM openjdk:11-jre-slim
-COPY --from=build /home/app/target/Crypto-Backend-0.0.1-SNAPSHOT.jar /usr/local/
+COPY --from=build /home/app/target/Blockchain-Backend-1.0.0.jar /usr/local/
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/usr/local/Crypto-Backend-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/local/Blockchain-Backend-1.0.0.jar"]
