@@ -6,7 +6,8 @@ export type BlockElement =
         data: string;
         timestamp: number;
         nonce: number;
-        executionTime: number
+        executionTime: number;
+        valid : boolean
     };
 
 export type BlockCreate =

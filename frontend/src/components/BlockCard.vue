@@ -56,16 +56,17 @@
               <b-form-input size="sm" v-model="cardData.nonce"></b-form-input>
             </b-col>
           </b-row>
+          <b-row class="my-1">
+          </b-row>
           <b-row class="my-2">
-            <b-col sm="2" class="offset-sm-2">
+            <b-col sm="3" class="offset-sm-3">
               <b-button
-                :disabled="!cardDataChanged"
+                :disabled="!(cardDataChanged || !cardData.valid)"
                 variant="primary"
                 size="sm"
                 @click="updateClass()"
-                >Update</b-button
-              >
-            </b-col>
+                >Remine/Update</b-button
+              ></b-col>
           </b-row>
         </b-container>
       </b-card-text>
@@ -116,6 +117,10 @@ export default class BlockCard extends Vue {
   @Watch('cardData', {immediate: false, deep: true})
   onCardDataChanged(){
       this.cardDataChanged = true
+  }
+
+  remine() {
+      console.log("Remine...")
   }
 
 }

@@ -139,6 +139,21 @@ export default class ServiceParent extends Vue {
     this.$bvModal.show('create-modal')
   }
 
+  mounted() {
+    const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
+    messagePromise.then(msg => {
+        if (msg.success) {
+            this.okMessage = msg.message
+            this.showOkBanner = true;
+            this.blockList = msg.dto;
+            console.log(this.blockList)
+        } else {
+            this.errorMessage = msg.message;
+            this.showErrorBanner = true;
+        }
+    });
+  }
+
   createBlock() {
     console.log("Create Block");
     this.showErrorBanner = false;
@@ -153,6 +168,7 @@ export default class ServiceParent extends Vue {
             this.okMessage = msg.message
             this.showOkBanner = true;
             this.blockList = msg.dto;
+            console.log(this.blockList)
         } else {
             this.errorMessage = msg.message;
             this.showErrorBanner = true;
