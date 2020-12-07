@@ -1,14 +1,26 @@
-# basic-web
+# blockchain-app
 
-Demo project for SE575 to show aspects of modern web design via the Vue framework
+Blockchain simulation frontend build using modern Vue.js
 
-## Project setup
+## Build and Run
+
+### Using Docker (Recommended)
+
+First, build and run the `Blockchain-Backend` service. 
+
+In a separate terminal, run the following commands:
+
+```
+docker build --tag bc-app .
+docker run -p 3000:80 bc-app
+```
+
+Then, access the UI by visiting [http://localhost:3000/](http://localhost:3000/)
+
+
+### Locally
 ```
 yarn install
-```
-
-### Compiles and hot-reloads for development
-```
 yarn serve
 ```
 
@@ -16,37 +28,3 @@ yarn serve
 ```
 yarn build
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-### BOOTSTRAP
-`yarn add bootstrap-vue bootstrap axios vue-axios`
-
-In `main.ts`
-```
-import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-Vue.use(VueAxios, axios)
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
-```
-
-### Docker
-
-First, build and run the backend docker service. In a separate terminal, run the 
-folllowing commands:
-
-`docker build --tag bc-app .`
-
-`docker run -p 3000:80 bc-app`
-
-Then, access the UI by visiting [http://localhost:3000/](http://localhost:3000/)

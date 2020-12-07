@@ -8,13 +8,13 @@ export type BlockElement =
         nonce: number;
         attempts: number;
         executionTime: number;
-        valid : boolean
+        valid: boolean;
     };
 
 export type BlockCreate =
     {
-        data: string,
-        difficulty: string,
-        attempts: number
+        data: string;
+        difficulty: string;
+        attempts: number;
     };
 

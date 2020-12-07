@@ -1,4 +1,15 @@
-# Running the application
+# Blockchain Simulation Backend
+This project provides the services needed by the frontend to create and
+manage a Blockchain. It is built using Java and Spring-boot
+
+## Running the application
+### Docker (Recommended)
+```
+docker build --tag bc-backend .
+docker run -p 8080:8080 bc-backend
+```
+
+### Locally
 1. Install mvn 
 2. cd Blockchain-Backend
 3. ./mvnw spring-boot:run
@@ -41,8 +52,3 @@ Proper handling of cross cutting concerns using advice.
 
 
 
-### Docker
-
-`docker build --tag bc-backend .`
-
-`docker run -p 8080:8080 bc-backend`

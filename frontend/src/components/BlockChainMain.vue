@@ -165,7 +165,7 @@ export default class ServiceParent extends Vue {
                     this.showOkBanner = true;
                 }
             }).catch(error => {
-                this.errorMessage = msg.message;
+                this.errorMessage = error.message;
                 this.showErrorBanner = true;
             });
             console.log(this.blockList)

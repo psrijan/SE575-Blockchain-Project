@@ -97,12 +97,10 @@
   
 
 <script lang="ts">
-import { Component, Prop, Emit, Watch, Vue } from "vue-property-decorator";
-import {BlockElement} from "../models/BlockChainTypes";
-import {UrlConstants} from "../constants/Constants"
-import {BaseMessage} from "../models/intermediatedtos"
-import BlockStore from "@/store/BlockStore"
-import { HttpService } from "../services/HttpService"
+import { Component, Prop, Watch, Vue } from "vue-property-decorator";
+import {BlockElement} from "@/models/BlockChainTypes";
+import {BaseMessage} from "@/models/intermediatedtos"
+import { HttpService } from "@/services/HttpService"
 @Component
 export default class BlockCard extends Vue {
   @Prop() private cardData!: BlockElement;
@@ -115,7 +113,7 @@ export default class BlockCard extends Vue {
     console.log(this.cardData.blockName);
     const updateRespPromise: Promise<BaseMessage> = this.httpService.update(this.cardData.data, this.cardData.blockName, this.cardData.attempts);
     updateRespPromise.then((resp) => {
-      console.log(resp)
+      console.log(resp);
       if (resp.success) {
         this.$emit('update_me')
       }
