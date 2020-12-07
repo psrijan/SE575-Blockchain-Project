@@ -40,4 +40,9 @@ public class DBBlockchainCore implements IBlockchainCore {
     public ServerDTO updateBlock(Integer id, String data, int limit) {
         return null;
     }
+
+    @Override
+    public void clearBlockchain() {
+        return;
+    }
 }

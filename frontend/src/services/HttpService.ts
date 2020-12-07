@@ -62,4 +62,15 @@ export class HttpService {
             return new BaseMessage(false, error.message);
         });
     }
+
+    clearBlockchain(): Promise<BaseMessage> {
+        const endpoint = this.baseurl+ UrlConstants.clear;
+        return this.instance.delete(endpoint).then((response) => {
+          const result = response.data;
+          return new BaseMessage(true, "Fetched All Blocks : Total Received: " + result.length, response.statusText,result);
+        }).catch(error => {
+            console.log("Error Fetching All Blocks...");
+            return new BaseMessage(false, error.message);
+        });
+    }
 }

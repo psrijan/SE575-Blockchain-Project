@@ -128,13 +128,11 @@ export default class ServiceParent extends Vue {
   }
 
   mounted() {
-    const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
+    const messagePromise: Promise<BaseMessage> = this.httpService.clearBlockchain();
     messagePromise.then(msg => {
         if (msg.success) {
-            this.okMessage = msg.message;
+            this.okMessage = "Successful connection to the server!";
             this.showOkBanner = true;
-            this.blockList = msg.dto;
-            console.log(this.blockList)
         } else {
             this.errorMessage = msg.message;
             this.showErrorBanner = true;

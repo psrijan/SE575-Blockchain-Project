@@ -76,4 +76,11 @@ public class BlockchainService {
         ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData(), updateBlockRequest.getAttempts());
         return modelMapper.map(serverDTO, BaseResponse.class);
     }
+
+    public BaseResponse clearBlockchain () {
+        logger.debug("Entering Clear Blockchain Service...");
+        blockchainCore.clearBlockchain();
+        BaseResponse response = new BaseResponse(true, "Cleared Blockchain");
+        return response;
+    }
 }
