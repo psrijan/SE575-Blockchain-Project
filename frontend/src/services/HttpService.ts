@@ -1,7 +1,7 @@
-import { BlockElement, BlockCreate } from "../models/BlockChainTypes"
-import axios, {AxiosInstance, AxiosResponse} from 'axios'
-import { UrlConstants} from "../constants/Constants"
-import { BaseMessage } from "../models/intermediatedtos"
+import { BlockElement, BlockCreate } from "@/models/BlockChainTypes"
+import axios, {AxiosInstance} from 'axios'
+import { UrlConstants} from "@/constants/Constants"
+import { BaseMessage } from "@/models/intermediatedtos"
 
 export class HttpService {
     private baseurl: string;
@@ -14,16 +14,15 @@ export class HttpService {
     addBlock(payload: BlockCreate): Promise<BaseMessage> {
     /* Make post request to the server */
     console.log("url " + this.baseurl + UrlConstants.add);
-    const promise = Promise.resolve(1).then( i => {
-        console.log(i)
+    Promise.resolve(1).then( i => {
+        console.log(i);
         return i + 1 ;    
     }).then(res => {
-        console.log(res)
+        console.log(res);
         return res + 1;
-    })
+    });
     const addReq = axios.post(this.baseurl + UrlConstants.add , payload);
-    const allReq = axios.get(this.baseurl + UrlConstants.all)
-   
+
     return axios.all([addReq]).then(axios.spread((...responses) =>{
         const addResp = responses[0];
         const addRespData = addResp.data;
@@ -40,14 +39,13 @@ export class HttpService {
           const result = response.data;
           return new BaseMessage(true, "Fetched All Blocks : Total Received: " + result.length, response.statusText,result);
         }).catch(error => {                
-            console.log("FFFF");
-            console.log("Error Fetching All Blocks...")
+            console.log("Error Fetching All Blocks...");
             return new BaseMessage(false, error.message);
         });
     }
 
     update(data: string, id: string)  {
-        console.log("Update Service Called...")
+        console.log("Update Service Called...");
         const payload = { "data": data };
 
         console.log("Update Request url: ", this.baseurl + UrlConstants.update);

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {BlockElement} from '../models/BlockChainTypes'
+import {BlockElement} from '@/models/BlockChainTypes'
 Vue.use(Vuex);
 
 export default new Vuex.Store({

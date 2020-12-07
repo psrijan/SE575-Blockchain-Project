@@ -73,11 +73,6 @@
                       </div>
                     </template>
                   </b-modal>
-                <!--
-                  <b-button variant="primary" class="ml-2" @click="getAll()"
-                    >Get All</b-button
-                  >
-                -->
               </b-col>
             </b-row>
             <b-row>
@@ -116,10 +111,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { BlockElement, BlockCreate } from "../models/BlockChainTypes";
+import { BlockElement, BlockCreate } from "@/models/BlockChainTypes";
 import BlockCard from "./BlockCard.vue";
 import  { HttpService } from "@/services/HttpService"
-import {BaseMessage} from "../models/intermediatedtos"
+import {BaseMessage} from "@/models/intermediatedtos"
 
 @Component({ components: { "block-card": BlockCard} })
 export default class ServiceParent extends Vue {
@@ -143,7 +138,7 @@ export default class ServiceParent extends Vue {
     const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
     messagePromise.then(msg => {
         if (msg.success) {
-            this.okMessage = msg.message
+            this.okMessage = msg.message;
             this.showOkBanner = true;
             this.blockList = msg.dto;
             console.log(this.blockList)
@@ -165,7 +160,7 @@ export default class ServiceParent extends Vue {
     const messagePromise: Promise<BaseMessage> = this.httpService.addBlock(payload);
     messagePromise.then(msg => {
         if (msg.success) {
-            this.okMessage = msg.message
+            this.okMessage = msg.message;
             this.showOkBanner = true;
             const getAllPromise: Promise<BaseMessage> = this.httpService.getAll();
              getAllPromise.then(msg => {
@@ -187,11 +182,11 @@ export default class ServiceParent extends Vue {
     }
     
     update() {
-        console.log("Get All For Update...")
+        console.log("Get All For Update...");
         const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
         messagePromise.then(msg => {
         if (msg.success) {
-            this.okMessage = msg.message
+            this.okMessage = msg.message;
             this.showOkBanner = true;
             this.blockList = msg.dto;
         } else {

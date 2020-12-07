@@ -86,10 +86,8 @@ import { HttpService } from "../services/HttpService"
 export default class BlockCard extends Vue {
   @Prop() private cardData!: BlockElement;
   @Prop() private baseUrl!: string; 
-  private errorMessage = "";
   private cardDataChanged = false;
-  private message= "";    
-  httpService = new HttpService(this.baseUrl)
+  httpService = new HttpService(this.baseUrl);
 
   mounted() {
     console.log("BASE URL: ", this.baseUrl);
@@ -98,8 +96,7 @@ export default class BlockCard extends Vue {
   updateClass() {
     console.log("update button clicked!!"); 
     this.cardDataChanged = false;
-    const endpoint ="";
-    console.log(this.cardData.blockName)
+    console.log(this.cardData.blockName);
     const updateRespPromise: Promise<BaseMessage> = this.httpService.update(this.cardData.data, this.cardData.blockName);
     updateRespPromise.then((resp) => {
         if (resp.success) {
