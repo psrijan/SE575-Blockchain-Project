@@ -40,3 +40,9 @@ Proper handling of cross cutting concerns using advice.
 
 
 
+
+### Docker
+
+`docker build --tag bc-backend .`
+
+`docker run -p 8080:8080 bc-backend`

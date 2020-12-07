@@ -42,5 +42,6 @@ Vue.use(IconsPlugin)
 
 ### Docker
 
-`docker build --tag bc-test .`
-`docker run -p 80:80 bc-test`
+`docker build --tag bc-app .`
+
+`docker run -p 3000:80 bc-app`
