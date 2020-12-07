@@ -63,14 +63,6 @@ public class BlockchainService {
         return new ArrayList<>();
     }
 
-    public BaseResponse isBlockchainValid() {
-        logger.debug("Entering Is Block Valid Service...");
-        boolean valid = blockchainCore.isValid();
-        String msg = valid? "Blockchain is Valid" : "Invalid Blockchain!";
-        BaseResponse baseResponse = new BaseResponse(valid, msg);
-        return baseResponse;
-    }
-
     public BaseResponse updateBlocks (Integer id, UpdateBlockRequest updateBlockRequest) {
         logger.debug("Entering Update Block Service...");
         ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData(), updateBlockRequest.getAttempts());

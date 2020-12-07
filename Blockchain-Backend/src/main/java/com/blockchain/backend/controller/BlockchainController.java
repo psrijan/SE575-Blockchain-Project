@@ -50,12 +50,6 @@ public class BlockchainController {
         return baseService.addNewBlock(addBlockRequest);
     }
 
-    @GetMapping("valid")
-    public BaseResponse isBlockchainValid() {
-        log.debug("Check Block Valid...");
-        return baseService.isBlockchainValid();
-    }
-
     @PutMapping("block/{id}")
     public BaseResponse updateBlock(@PathVariable("id") Integer blockId, @RequestBody UpdateBlockRequest blockRequest) {
         log.debug("Update Block Response... BlockId: {} Message: {}", blockId, blockRequest);
