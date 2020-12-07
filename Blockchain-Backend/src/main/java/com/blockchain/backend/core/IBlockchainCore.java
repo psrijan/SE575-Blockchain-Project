@@ -19,4 +19,6 @@ public interface IBlockchainCore {
     Boolean isValid();
 
     ServerDTO updateBlock(Integer id, String data, int limit);
+
+    void clearBlockchain();
 }
