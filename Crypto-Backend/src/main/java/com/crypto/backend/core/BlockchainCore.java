@@ -15,10 +15,9 @@ import org.springframework.web.context.annotation.ApplicationScope;
  * SE 575 - Software Design
  * Blockchain
  */
-@ApplicationScope
 @Component
 public class BlockchainCore {
-    private ArrayList<Block> blockchain = new ArrayList<Block>();
+    static private ArrayList<Block> blockchain = new ArrayList<Block>();
     /* Set difficulty that must be solved */
     private int difficulty = 5;
 

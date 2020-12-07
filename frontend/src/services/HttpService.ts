@@ -24,17 +24,10 @@ export class HttpService {
     const addReq = axios.post(this.baseurl + UrlConstants.add , payload);
     const allReq = axios.get(this.baseurl + UrlConstants.all)
    
-    return axios.all([addReq, allReq]).then(axios.spread((...responses) =>{
+    return axios.all([addReq]).then(axios.spread((...responses) =>{
         const addResp = responses[0];
-        const getAllBlock= responses[1];
         const addRespData = addResp.data;
-        const allBlocks = getAllBlock.data;
-        
-        if (addRespData.success) {
-            return new BaseMessage(true, addRespData.message, "", allBlocks)
-        } else {
-            return new BaseMessage(false, addRespData.message);
-        }
+        return new BaseMessage(addRespData.success, addRespData.message, "");
     })).catch(error => {
         return new BaseMessage(false, error.message);
     })

@@ -167,7 +167,17 @@ export default class ServiceParent extends Vue {
         if (msg.success) {
             this.okMessage = msg.message
             this.showOkBanner = true;
-            this.blockList = msg.dto;
+            const getAllPromise: Promise<BaseMessage> = this.httpService.getAll();
+             getAllPromise.then(msg => {
+                if (msg.success) {
+                    this.blockList = msg.dto;
+                    this.okMessage  = msg.message;
+                    this.showOkBanner = true;
+                }
+            }).catch(error => {
+                this.errorMessage = msg.message;
+                this.showErrorBanner = true;
+            });
             console.log(this.blockList)
         } else {
             this.errorMessage = msg.message;
