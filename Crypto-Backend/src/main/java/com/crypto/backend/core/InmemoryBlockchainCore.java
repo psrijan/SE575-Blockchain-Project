@@ -70,7 +70,6 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
         for (int i = 1; i < blockchain.size(); i++) {
             currentBlock = blockchain.get(i);
             previousBlock = blockchain.get(i - 1);
-
             /* If-Statements to compare the hashes*/
             //Current Hash vs. Calculated Hash
             if (!currentBlock.getHash().equals(currentBlock.calculateHash())) {
@@ -88,6 +87,9 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
             if (!currentBlock.getHash().substring(0, difficulty).equals(hashTarget)) {
                 System.out.println("This block is not yet mined");
                 isBlockChainValid = false;
+                currentBlock.setValid(false);
+            }
+            if (!isBlockChainValid) { // if parent block invalid then the child block should also be invalid
                 currentBlock.setValid(false);
             }
         }
