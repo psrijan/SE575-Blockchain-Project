@@ -39,3 +39,8 @@ Vue.use(VueAxios, axios)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 ```
+
+### Docker
+
+`docker build --tag bc-test .`
+`docker run -p 80:80 bc-test`
