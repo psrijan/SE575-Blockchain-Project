@@ -26,6 +26,7 @@
                     id="difficulty-id"
                     type="text"
                     v-model="difficulty"
+
                   ></b-form-input> </b-input-group>
               </b-col>
               <b-col sm="3">
@@ -119,6 +120,7 @@ export default class ServiceParent extends Vue {
   private difficulty = "000";
   private attempts = 1000000;
   private httpService = new HttpService(this.defaultServerAddress);
+  private createdNewBlock = false;
 
   createModal() {
     this.newBlockData = "";
@@ -142,6 +144,8 @@ export default class ServiceParent extends Vue {
 
   createBlock() {
     console.log("Create Block");
+
+    this.createdNewBlock = true;
     this.showErrorBanner = false;
     this.showOkBanner =  false;
     /* Hide modal and capture data as post payload */

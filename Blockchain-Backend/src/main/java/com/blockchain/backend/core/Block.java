@@ -40,7 +40,7 @@ public class Block
 	}
 
 	/* Block Constructor */
-	public Block(Integer id, String data, String previousHash, int limit)
+	public Block(Integer id, String data, String previousHash, int limit, String difficultyString)
 	{
 		this.blockId = id;
 		this.data = data;
@@ -48,6 +48,7 @@ public class Block
 		this.timestamp = new Date().getTime();
 		this.hash = calculateHash();
 		this.attempts = limit;
+		this.difficulty = difficultyString;
 	}
 
 	/* Function to calculate the hash with Block Details
@@ -60,14 +61,14 @@ public class Block
 
 	/* Method to mine the blocks and adds the number of '0's based on set difficulty
 	 */
-	public void mineBlock(String difficultyString, boolean remine, int limit)
+	public void mineBlock(boolean remine, int limit)
 	{
-		int difficulty = difficultyString.length();
-		String target = new String(new char[difficulty]).replace('\0', '0');
+		int padding = this.difficulty.length();
+		String target = new String(new char[padding]).replace('\0', '0');
 		System.out.println("Target: " + target);
 		if (remine) // Because the first number of zeros in the start of the block actually match the target and it doesn't get mined
 			this.hash = calculateHash();
-		while(nonce < limit && !hash.substring(0, difficulty).equals(target)) {
+		while(nonce < limit && !hash.substring(0, padding).equals(target)) {
 			nonce++;
 			hash = calculateHash();
 		}

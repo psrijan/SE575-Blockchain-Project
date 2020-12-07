@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 @Component("inmemory")
 public class InmemoryBlockchainCore implements IBlockchainCore {
     static private ArrayList<Block> blockchain = new ArrayList<Block>();
-    /* Set difficulty that must be solved */
-    private int difficulty = 5;
 
     @Override
     public List<Block> getAllBlocks() {
@@ -45,8 +43,7 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
     @Override
     public int addNewBlock(Block block, String difficulty, int limit) {
         Long startTime = System.currentTimeMillis();
-        this.difficulty = difficulty.length();
-        block.mineBlock(difficulty, false, limit);
+        block.mineBlock(false, limit);
         blockchain.add(block);
         long endTime = System.currentTimeMillis();
         block.setExecutionTime(endTime - startTime);
@@ -60,7 +57,6 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
     public Boolean isValid() {
         Block currentBlock;
         Block previousBlock;
-        String hashTarget = new String(new char[difficulty]).replace('\0', '0');
 
         boolean isBlockChainValid = true;
         /* Checks the hashes by looping through the blockchain */
@@ -80,7 +76,10 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
                 isBlockChainValid = false;
                 currentBlock.setValid(false);
             }
+
             /* Checks if Hash has been solved */
+            int difficulty = currentBlock.getDifficulty().length();
+            String hashTarget = new String(new char[difficulty]).replace('\0', '0');
             if (!currentBlock.getHash().substring(0, difficulty).equals(hashTarget)) {
                 System.out.println("This block is not yet mined");
                 isBlockChainValid = false;
@@ -104,7 +103,7 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
             pid = block.getBlockId();
             String parentHash = (id <= 0)? "0": blockchain.get(pid - 1).getHash();
             block.setPreviousHash(parentHash); // there is a remote chance that the parent could have been changed as well. Which would cause the new hash to also mismatch because we will be using the older parents hash.
-            block.mineBlock(block.getDifficulty(), true, limit);
+            block.mineBlock(true, limit);
             isValid();
             return new ServerDTO(true, "Successfully updated the block" );
         }

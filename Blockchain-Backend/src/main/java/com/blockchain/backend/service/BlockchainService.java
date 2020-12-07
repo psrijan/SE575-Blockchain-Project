@@ -39,7 +39,8 @@ public class BlockchainService {
         logger.debug("Entering Add New Block Service...");
         if (blockRequest.getData().equals("hello"))
            throw new RuntimeException();
-        Block block = new Block(blockchainCore.getIndex(), blockRequest.getData(), blockchainCore.getMostRecentHash(), blockRequest.getAttempts());
+        Block block = new Block(blockchainCore.getIndex(), blockRequest.getData(),
+                blockchainCore.getMostRecentHash(), blockRequest.getAttempts(), blockRequest.getDifficulty());
         block.setDifficulty(blockRequest.getDifficulty());
         int index = blockchainCore.addNewBlock(block, blockRequest.getDifficulty(), blockRequest.getAttempts());
         BaseResponse baseResponse = new BaseResponse();
