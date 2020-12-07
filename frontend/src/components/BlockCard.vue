@@ -1,9 +1,7 @@
 <template>
   <div>
     <b-card title="Block Record"  v-bind:class="{ active: cardData.valid, 'alert-warning ': !cardData.valid}">
-      <b-card-text> Details </b-card-text>
-      <b-card-text>
-        <b-container>
+      <b-card-text> Details </b-card-text> <b-card-text> <b-container>
           <b-row class="my-1">
             <b-col sm="3" class="offset-sm-2 text-left">
               <label>BlockID:</label>
@@ -76,12 +74,20 @@
           <b-row class="my-2">
             <b-col sm="3" class="offset-sm-3">
               <b-button
-                :disabled="!(cardDataChanged || !cardData.valid)"
                 variant="primary"
                 size="sm"
                 @click="updateClass()"
-                >Remine/Update</b-button
+                >Update</b-button
               ></b-col>
+            <b-col sm="3" class="offset-sm-3">
+              <b-button
+                :disabled="cardData.valid"
+                variant="primary"
+                size="sm"
+                @click="updateClass()"
+                >Remine</b-button
+              >
+            </b-col>
           </b-row>
         </b-container>
       </b-card-text>
@@ -118,12 +124,10 @@ export default class BlockCard extends Vue {
   }
 
 
-  @Watch('cardData', {immediate: true, deep: true})
+  @Watch('cardData', {immediate: false, deep: true})
   onCardDataChanged(){
       this.cardDataChanged = true;
   }
-
-
 }
 </script>
 
