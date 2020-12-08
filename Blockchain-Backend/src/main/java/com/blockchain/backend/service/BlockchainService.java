@@ -1,14 +1,13 @@
 package com.blockchain.backend.service;
 
 import com.blockchain.backend.core.Block;
+import com.blockchain.backend.core.InmemoryBlockchainCore;
 import com.blockchain.backend.dto.BaseResponse;
 import com.blockchain.backend.dto.request.AddBlockRequest;
-import com.blockchain.backend.dto.response.BlockResponse;
-import com.blockchain.backend.core.InmemoryBlockchainCore;
 import com.blockchain.backend.dto.request.UpdateBlockRequest;
+import com.blockchain.backend.dto.response.BlockResponse;
 import com.blockchain.backend.dto.server.ServerDTO;
 import com.blockchain.backend.helper.MyModelMapper;
-import com.blockchain.backend.repository.IBaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +23,11 @@ import java.util.stream.IntStream;
 public class BlockchainService {
 
     @Autowired
-    private IBaseRepository baseRepository;
-
-    @Autowired
     private MyModelMapper modelMapper;
 
+    // Configuration to have inmemory blockchain core used. A dummy stub implementation
+    // of persisted database can be used by changing the qualifier to db. This is just for
+    // demonstration of how the application will be extended.
     @Autowired
     @Qualifier("inmemory")
     private InmemoryBlockchainCore blockchainCore;
@@ -37,8 +36,6 @@ public class BlockchainService {
 
     public BaseResponse addNewBlock(AddBlockRequest blockRequest) {
         logger.debug("Entering Add New Block Service...");
-        if (blockRequest.getData().equals("hello"))
-           throw new RuntimeException();
         Block block = new Block(blockchainCore.getIndex(), blockRequest.getData(),
                 blockchainCore.getMostRecentHash(), blockRequest.getAttempts(), blockRequest.getDifficulty());
         block.setDifficulty(blockRequest.getDifficulty());
@@ -54,22 +51,22 @@ public class BlockchainService {
         List<Block> blockList = blockchainCore.getAllBlocks();
         if (blockList != null) {
             return IntStream.range(0, blockList.size()).mapToObj(i -> {
-                            BlockResponse blockResponse = modelMapper.map(blockList.get(i), BlockResponse.class);
-                            blockResponse.setBlockName(blockList.get(i).getBlockId());
-                            blockResponse.setIndex(i);
-                            return blockResponse;
-                            }).collect(Collectors.toList());
+                BlockResponse blockResponse = modelMapper.map(blockList.get(i), BlockResponse.class);
+                blockResponse.setBlockName(blockList.get(i).getBlockId());
+                blockResponse.setIndex(i);
+                return blockResponse;
+            }).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }
 
-    public BaseResponse updateBlocks (Integer id, UpdateBlockRequest updateBlockRequest) {
+    public BaseResponse updateBlocks(Integer id, UpdateBlockRequest updateBlockRequest) {
         logger.debug("Entering Update Block Service...");
         ServerDTO serverDTO = blockchainCore.updateBlock(id, updateBlockRequest.getData(), updateBlockRequest.getAttempts());
         return modelMapper.map(serverDTO, BaseResponse.class);
     }
 
-    public BaseResponse clearBlockchain () {
+    public BaseResponse clearBlockchain() {
         logger.debug("Entering Clear Blockchain Service...");
         blockchainCore.clearBlockchain();
         BaseResponse response = new BaseResponse(true, "Cleared Blockchain");

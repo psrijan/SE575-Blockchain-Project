@@ -1,11 +1,11 @@
 package com.blockchain.backend.core;
 
+import com.blockchain.backend.dto.server.ServerDTO;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.blockchain.backend.dto.server.ServerDTO;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Phat Ngo
@@ -26,7 +26,7 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
 
     @Override
     public String getMostRecentHash() {
-        return (blockchain.size()== 0) ? "0" : blockchain.get(blockchain.size() -1).getHash();
+        return (blockchain.size() == 0) ? "0" : blockchain.get(blockchain.size() - 1).getHash();
     }
 
     @Override
@@ -101,11 +101,11 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
             block.setData(data);
             block.setAttempts(limit);
             pid = block.getBlockId();
-            String parentHash = (id <= 0)? "0": blockchain.get(pid - 1).getHash();
+            String parentHash = (id <= 0) ? "0" : blockchain.get(pid - 1).getHash();
             block.setPreviousHash(parentHash); // there is a remote chance that the parent could have been changed as well. Which would cause the new hash to also mismatch because we will be using the older parents hash.
             block.mineBlock(true, limit);
             isValid();
-            return new ServerDTO(true, "Successfully updated the block" );
+            return new ServerDTO(true, "Successfully updated the block");
         }
         return new ServerDTO(false, String.format("Cannot find the block of ID: %d", id));
     }

@@ -1,15 +1,21 @@
 package com.blockchain.backend.core;
 
 import com.blockchain.backend.dto.server.ServerDTO;
+import com.blockchain.backend.repository.IBaseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /*
-Dummy class to show how a persistent version of the blockchain core would be implementedf
+Dummy class to show how a persistent version of the blockchain core would be implemented
+This can replace the InMemoryBlockchainCore by having a stereotype annotation changed to db
  */
 @Component("db")
 public class DBBlockchainCore implements IBlockchainCore {
+
+    @Autowired
+    private IBaseRepository repository;
 
     @Override
     public List<Block> getAllBlocks() {
