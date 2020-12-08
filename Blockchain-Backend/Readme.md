@@ -17,7 +17,7 @@ docker run -p 8080:8080 bc-backend
 ## Design Decision
 ### Algorithm:
 
-Blockchain algorithm is divided into three Java classes: "Block", "SHA256Utility", and "Blockchain".
+The Blockchain algorithm is divided into three Java classes: `Block`, `SHA256Utility`, and `Blockchain`.
 The Block.java contains block details, along with two methods: "calculateHash" and "mineBlock".
 The calculateHash method calls upon the SHA256Utility class 
 (where a function is located that will take a string consisting of the block's details and return a hashed string)
