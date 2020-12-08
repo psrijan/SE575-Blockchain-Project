@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "RequestMessages")
-public class BaseMessage{
+public class RequestMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
