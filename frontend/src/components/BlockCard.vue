@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <b-card title="Block Record"  v-bind:class="{ active: cardData.valid, 'alert-warning ': !cardData.valid}">
@@ -28,8 +29,14 @@
             <b-col sm="3" class="offset-sm-2 text-left">
               <label> Attempts:</label>
             </b-col>
-            <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.nonce" readonly></b-form-input>
+            <b-col sm="6" v-if="cardData.attempts !== cardData.nonce">
+              <b-form-input size="sm" v-model="cardData.nonce" readonly
+              v-bind:class="{ 'text-danger  ': cardData.attempts === cardData.nonce}"
+              ></b-form-input>
+            </b-col>
+            <b-col sm="6" v-else>
+              <b-form-input :state="false" size="sm" readonly class="text-danger" v-model="err"
+              ></b-form-input>
             </b-col>
           </b-row>
 
@@ -65,7 +72,11 @@
               <label>Attempt Limit:</label>
             </b-col>
             <b-col sm="6">
-              <b-form-input size="sm" v-model="cardData.attempts"></b-form-input>
+              <b-form-input
+                      size="sm"
+                      type="number"
+                      v-model="cardData.attempts"
+              ></b-form-input>
             </b-col>
           </b-row>
 
@@ -101,12 +112,15 @@ import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import {BlockElement} from "@/models/BlockChainTypes";
 import {BaseMessage} from "@/models/intermediatedtos"
 import { HttpService } from "@/services/HttpService"
+import {MAXATTEMPTSERROR} from '@/constants/Constants';
+
 @Component
 export default class BlockCard extends Vue {
   @Prop() private cardData!: BlockElement;
   @Prop() private baseUrl!: string;
   private cardDataChanged = false;
   httpService = new HttpService(this.baseUrl);
+  private err = MAXATTEMPTSERROR;
 
   updateClass() {
     console.log("update button clicked!!");

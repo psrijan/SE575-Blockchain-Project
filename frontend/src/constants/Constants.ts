@@ -7,3 +7,5 @@ export const UrlConstants = {
     update: Endpoint + '/block/',
     clear: Endpoint + '/blocks/'
   };
+
+export const MAXATTEMPTSERROR = 'MAX ATTEMPTS REACHED';
