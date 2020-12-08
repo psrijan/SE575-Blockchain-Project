@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <b-card title="Block Record"  v-bind:class="{ active: cardData.valid, 'alert-warning ': !cardData.valid}">

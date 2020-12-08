@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img alt="Vue logo" src="../assets/logo.png" width="300">
     <b-container>
       <web-services-demo></web-services-demo>
     </b-container>
