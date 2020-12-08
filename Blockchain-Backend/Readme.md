@@ -34,7 +34,7 @@ Additionally, a simple implementation of the hashcash proof-of-work is used to p
 
 ### Backend Architecture:
 
-The backend project is designed on the Controller, Service, Repository pattern. We have used springboot as our container to build the backend application. This gave us an ellegant way to design a clean architecture, while using minimal code/xmls for configuring and running the application.
+The backend project is designed on the Controller, Service, Repository pattern. We have used springboot as our container to build the backend application. This gave us an elegant way to design a clean architecture, while using minimal code/xmls for configuring and running the application.
 
 Using the springboot's annotation framework, we decouple the dependencies among the classes. For instance, we have used interfaces to design our IBlockchainCore.java and it's other child
 classes. Using this along with spring annotation, we can easily configure the application to choose between an InMemoryBlockchainCore and DBBlockchainCore (DB stands for database, for now this is a stub class)
@@ -42,8 +42,9 @@ classes. Using this along with spring annotation, we can easily configure the ap
 While considering the design we also thought about cross cutting concerns such as error handling. For this we used a centralized error interceptor, `RestExceptionHandler`,
 in the application. `RestExceptionHandler` handles all errors and gracefully and returns error response to the client. This way we reduce the amount of boilerplate code in the application, and also centralize our error handling concerns.
 
-We made separate DTOs for Internal, External Request, and External Response. While this does increase the number of classes in the application, it future proof our design, as there aren't dependencies between ServerDTO and RequestDTO. Which means a change in one will not affect the other. 
-We have used inheritance to provide some common behavior for all the DTOs. For instance, for those DTOs that require message, success (common fields for DTOs) they can inherit it from BaseResponse.
+We made separate DTOs for Internal, External Request, and External Response. While this does increase the number of classes in the application, it future proof our design, as there aren't dependencies between Server DTOs(data transfer objects) and Request DTOs. 
+Which means a change in one will not affect the other. We have used inheritance to provide some common
+behavior for all the DTOs. For instance, DTOs that require message, success (common fields for DTOs) can be inherited from the BaseResponse DTO.
 
 We have also given thought to our Rest API design, and tried to make it simple with minimal number of responses. In addition, since url versions are important part of application, as it causes changes in both client and server side, we have used proper Restful API naming conventions 
 (ie: nouns to represent resource, actions identified by request type).
