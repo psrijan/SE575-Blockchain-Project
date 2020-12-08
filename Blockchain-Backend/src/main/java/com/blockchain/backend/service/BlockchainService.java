@@ -68,8 +68,8 @@ public class BlockchainService {
 
     public BaseResponse clearBlockchain() {
         logger.debug("Entering Clear Blockchain Service...");
-        blockchainCore.clearBlockchain();
-        BaseResponse response = new BaseResponse(true, "Cleared Blockchain");
+        int clearedSize = blockchainCore.clearBlockchain();
+        BaseResponse response = new BaseResponse(true, String.format("Cleared %d Blocks form the Blockchain!", clearedSize));
         return response;
     }
 }

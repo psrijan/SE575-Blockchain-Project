@@ -1,6 +1,7 @@
 export const Endpoint = '/blockchain';
 
 export const UrlConstants = {
+    status: Endpoint, 
     add: Endpoint + '/block',
     all: Endpoint + '/blocks',
     valid: Endpoint + '/valid',

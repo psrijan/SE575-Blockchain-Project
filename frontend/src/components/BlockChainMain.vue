@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h1> Blockchain Application </h1>
+    <h1>Blockchain Application</h1>
     <div class="row">
       <b-container>
         <b-card class="col-12" bg-variant="dark" text-variant="white">
           <b-card-text>
-            Please ensure the backend is running, and enter its server address below.
+            Please ensure the backend is running, and enter its server address
+            below.
           </b-card-text>
           <b-card-text>
             <b-row class="my-1">
@@ -26,8 +27,8 @@
                     id="difficulty-id"
                     type="text"
                     v-model="difficulty"
-
-                  ></b-form-input> </b-input-group>
+                  ></b-form-input>
+                </b-input-group>
               </b-col>
               <b-col sm="3">
                 <b-input-group prepend="Attempts:">
@@ -39,43 +40,63 @@
                 </b-input-group>
               </b-col>
               <b-col sm="2">
-                  <b-button variant="success" v-b-modal.create-modal @click="createModal()">Create a Block</b-button>
-                  <b-modal id="create-modal" title="Create a new Block">
-                    <div class="d-block text-center">
-                      <p>
-                        Please enter the new block data:
-                      </p>
-                      <b-form-textarea
-                        id="block-data"
-                        v-model="newBlockData"
-                        rows="3"
-                      ></b-form-textarea>
+                <b-button
+                  variant="success"
+                  v-b-modal.create-modal
+                  @click="createModal()"
+                  >Create Block</b-button
+                >
+                <b-modal id="create-modal" title="Create a new Block">
+                  <div class="d-block text-center">
+                    <p>Please enter the new block data:</p>
+                    <b-form-textarea
+                      id="block-data"
+                      v-model="newBlockData"
+                      rows="3"
+                    ></b-form-textarea>
+                  </div>
+                  <template #modal-footer>
+                    <div class="w-100">
+                      <b-button
+                        variant="primary"
+                        size="sm"
+                        class="float-right"
+                        @click="createBlock()"
+                      >
+                        Create
+                      </b-button>
                     </div>
-                    <template #modal-footer>
-                      <div class="w-100">
-                        <b-button
-                          variant="primary"
-                          size="sm"
-                          class="float-right"
-                          @click="createBlock()"
-                        >
-                          Create
-                        </b-button>
-                      </div>
-                    </template>
-                  </b-modal>
+                  </template>
+                </b-modal>
+              </b-col>
+              <b-col>
+                <b-button variant="danger" @click="clearBlock()"
+                  >Clear Block</b-button
+                >
               </b-col>
             </b-row>
             <b-row>
               <b-col sm="8" class="offset-sm-2">
-                <b-alert fade :show="showErrorBanner" dismissible variant="danger" @dismissed="showErrorBanner=false">
+                <b-alert
+                  fade
+                  :show="showErrorBanner"
+                  dismissible
+                  variant="danger"
+                  @dismissed="showErrorBanner = false"
+                >
                   {{ errorMessage }}
                 </b-alert>
               </b-col>
             </b-row>
             <b-row>
               <b-col sm="8" class="offset-sm-2">
-                <b-alert fade :show="showOkBanner" dismissible variant="success" @dismissed="showOKBanner=false">
+                <b-alert
+                  fade
+                  :show="showOkBanner"
+                  dismissible
+                  variant="success"
+                  @dismissed="showOKBanner = false"
+                >
                   {{ okMessage }}
                 </b-alert>
               </b-col>
@@ -92,7 +113,8 @@
         :key="index"
       >
         <block-card
-          :card-data="block" :base-url="defaultServerAddress"
+          :card-data="block"
+          :base-url="defaultServerAddress"
           @update_me="update"
         ></block-card>
       </div>
@@ -105,10 +127,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import { BlockElement, BlockCreate } from "@/models/BlockChainTypes";
 import BlockCard from "./BlockCard.vue";
-import  { HttpService } from "@/services/HttpService"
-import {BaseMessage} from "@/models/intermediatedtos"
+import { HttpService } from "@/services/HttpService";
+import { BaseMessage } from "@/models/intermediatedtos";
 
-@Component({ components: { "block-card": BlockCard} })
+@Component({ components: { "block-card": BlockCard } })
 export default class ServiceParent extends Vue {
   private blockList: BlockElement[] = [];
   private defaultServerAddress = "http://localhost:8080";
@@ -124,70 +146,93 @@ export default class ServiceParent extends Vue {
 
   createModal() {
     this.newBlockData = "";
-    this.$bvModal.show('create-modal')
+    this.$bvModal.show("create-modal");
+  }
+
+  clearBlock() {
+      this.blockList = [];
+    const messagePromise: Promise<BaseMessage> = this.httpService.clearBlockchain();
+    messagePromise.then((msg) => {
+      if (msg.success) {
+        this.okMessage = msg.message;
+        this.showOkBanner = true;
+      } else {
+        this.errorMessage = msg.message;
+        this.showErrorBanner = true;
+      }
+    });
   }
 
   mounted() {
-    const messagePromise: Promise<BaseMessage> = this.httpService.clearBlockchain();
-    messagePromise.then(msg => {
-        if (msg.success) {
-            this.okMessage = "Successful connection to the server!";
-            this.showOkBanner = true;
-        } else {
-            this.errorMessage = msg.message;
-            this.showErrorBanner = true;
-        }
+    const statPromise: Promise<BaseMessage> = this.httpService.getStatus();
+    statPromise.then((msg) => {
+      if (msg.success) {
+        this.okMessage = msg.message;
+        this.showOkBanner = true;
+        this.getAll(); 
+      } else {
+        this.errorMessage = msg.message;
+        this.showErrorBanner = true;
+      }
     });
   }
 
   createBlock() {
     console.log("Create Block");
-
     this.createdNewBlock = true;
     this.showErrorBanner = false;
-    this.showOkBanner =  false;
+    this.showOkBanner = false;
     /* Hide modal and capture data as post payload */
-    this.$bvModal.hide('create-modal');
-    const payload: BlockCreate = {data: this.newBlockData, difficulty: this.difficulty, attempts: this.attempts};
+    this.$bvModal.hide("create-modal");
+    const payload: BlockCreate = {
+      data: this.newBlockData,
+      difficulty: this.difficulty,
+      attempts: this.attempts,
+    };
     console.log(payload);
     const messagePromise: Promise<BaseMessage> = this.httpService.addBlock(payload);
-    messagePromise.then(msg => {
-        if (msg.success) {
-            this.okMessage = msg.message;
-            this.showOkBanner = true;
-            const getAllPromise: Promise<BaseMessage> = this.httpService.getAll();
-             getAllPromise.then(msg => {
-                if (msg.success) {
-                    this.blockList = msg.dto;
-                    this.okMessage  = msg.message;
-                    this.showOkBanner = true;
-                }
-            }).catch(error => {
-                this.errorMessage = error.message;
-                this.showErrorBanner = true;
-            });
-            console.log(this.blockList)
-        } else {
-            this.errorMessage = msg.message;
-            this.showErrorBanner = true;
-        }
+    messagePromise.then((msg) => {
+      if (msg.success) {
+        this.okMessage = msg.message;
+        this.showOkBanner = true;
+        this.getAll();
+      } else {
+        this.errorMessage = msg.message;
+        this.showErrorBanner = true;
+      }
     });
-    }
+  }
 
-    update() {
-        console.log("Get All For Update...");
-        const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
-        messagePromise.then(msg => {
+  getAll() {
+    const getAllPromise: Promise<BaseMessage> = this.httpService.getAll();
+    getAllPromise
+      .then((msg) => {
         if (msg.success) {
-            this.okMessage = msg.message;
-            this.showOkBanner = true;
-            this.blockList = msg.dto;
-        } else {
-            this.errorMessage = msg.message;
-            this.showErrorBanner = true;
+          this.blockList = msg.dto;
+          this.okMessage = msg.message;
+          this.showOkBanner = true;
         }
-        });
-    }
+      }).catch((error) => {
+        this.errorMessage = error.message;
+        this.showErrorBanner = true;
+      });
+    console.log(this.blockList);
+  }
+
+  update() {
+    console.log("Get All For Update...");
+    const messagePromise: Promise<BaseMessage> = this.httpService.getAll();
+    messagePromise.then((msg) => {
+      if (msg.success) {
+        this.okMessage = msg.message;
+        this.showOkBanner = true;
+        this.blockList = msg.dto;
+      } else {
+        this.errorMessage = msg.message;
+        this.showErrorBanner = true;
+      }
+    });
+  }
 }
 </script>
 

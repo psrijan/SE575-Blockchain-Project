@@ -20,5 +20,5 @@ public interface IBlockchainCore {
 
     ServerDTO updateBlock(Integer id, String data, int limit);
 
-    void clearBlockchain();
+    int clearBlockchain();
 }

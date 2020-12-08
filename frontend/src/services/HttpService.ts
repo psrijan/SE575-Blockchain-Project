@@ -67,9 +67,20 @@ export class HttpService {
         const endpoint = this.baseurl+ UrlConstants.clear;
         return this.instance.delete(endpoint).then((response) => {
           const result = response.data;
-          return new BaseMessage(true, "Fetched All Blocks : Total Received: " + result.length, response.statusText,result);
+          return new BaseMessage(true, result.message);
         }).catch(error => {
-            console.log("Error Fetching All Blocks...");
+            console.log("Error clearing blocks...");
+            return new BaseMessage(false, error.message);
+        });
+    }
+
+    getStatus(): Promise<BaseMessage> {
+        const endpoint = this.baseurl+ UrlConstants.status;
+        return this.instance.get(endpoint).then((response) => {
+          const result = response.data;
+          return new BaseMessage(true, result.data);
+        }).catch(error => {
+            console.log("Error Retrieving Server Status...");
             return new BaseMessage(false, error.message);
         });
     }

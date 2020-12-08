@@ -111,7 +111,9 @@ public class InmemoryBlockchainCore implements IBlockchainCore {
     }
 
     @Override
-    public void clearBlockchain() {
+    public int clearBlockchain() {
+        int clearedSize = blockchain.size();
         blockchain = new ArrayList<Block>();
+        return clearedSize;
     }
 }

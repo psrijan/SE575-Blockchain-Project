@@ -48,7 +48,7 @@ public class DBBlockchainCore implements IBlockchainCore {
     }
 
     @Override
-    public void clearBlockchain() {
-        return;
+    public int clearBlockchain() {
+        return 0;
     }
 }

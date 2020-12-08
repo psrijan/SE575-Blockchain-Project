@@ -26,16 +26,13 @@ public class BlockchainController {
 
     private static Date startup = new Date();
 
-    @Autowired
-    private MyModelMapper modelMapper;
-
     private Logger log = LoggerFactory.getLogger(BlockchainController.class);
 
     @GetMapping()
-    private String getStats() {
+    private BaseResponse getStats() {
         log.debug("Get Stat Message...");
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm");
-        return "Blockchain-Backend Up Since: " + dateFormat.format(startup);
+        return new BaseResponse(true, "Blockchain-Backend Up Since: " + dateFormat.format(startup));
     }
 
     @GetMapping("blocks")
