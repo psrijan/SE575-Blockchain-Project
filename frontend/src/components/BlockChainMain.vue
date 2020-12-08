@@ -131,8 +131,7 @@ export default class ServiceParent extends Vue {
     const messagePromise: Promise<BaseMessage> = this.httpService.clearBlockchain();
     messagePromise.then(msg => {
         if (msg.success) {
-            this.okMessage = "Successful connection to the server!";
-            this.showOkBanner = true;
+            console.log("Successfully cleared the blockchain");
         } else {
             this.errorMessage = msg.message;
             this.showErrorBanner = true;
