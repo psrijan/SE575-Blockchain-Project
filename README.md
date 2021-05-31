@@ -13,7 +13,7 @@ The Blockchain simulation application is split into a Vue.js frontend and a Java
 Please see the respective project directory for further instructions
 on how to build and run each part of the project.
 
-Blockchain Simulation Backend
+### Blockchain Simulation Backend
 This project provides the services needed by the frontend to create and manage a Blockchain. It is built using Java and Spring-boot
 
 Running the application
